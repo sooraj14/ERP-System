@@ -1,0 +1,82 @@
+﻿# .NET-related files
+bin/
+obj/
+*.user
+*.rsuser
+*.suo
+*.cache
+*.pdb
+*.mdb
+*.opendb
+*.vscode/
+
+#images
+Images/
+
+
+# ASP.NET-specific folders
+.vscode/
+node_modules/
+
+# Logs
+*.log
+logs/
+LogFiles/
+
+# Environment variables
+.env
+.env.*
+
+# Visual Studio files
+.vs/
+.vscode/
+*.csproj.user
+*.sln.docstates
+
+# Local History folder
+.localhistory/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Auto-generated files
+_Dependencies
+project.lock.json
+project.fragment.lock.json
+artifacts/
+Generated\ Code/
+
+# Windows-specific files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS-specific files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE settings
+.idea/
+*.Rider/
+.ReSharper/
+**/riderProjects/
+*.iml
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# DotNet Core and ASP.NET Core specific
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Test.json
+
+wwwroot/Uploads/*
+Migrations/
+https://www.msn.com/en-in/sports/cricket/cricket-internationals/game-center/sp-id-243108?ocid=winp2fp&cvid=9f8d97d9ccf546f89dab1d5378fb4857
