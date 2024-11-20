@@ -8,7 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Images\" />
+    <Folder Include="ModelClass\" />
+    <Folder Include="wwwroot\Images\img\" />
   </ItemGroup>
 
   <ItemGroup>
