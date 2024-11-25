@@ -1,0 +1,26 @@
+﻿@page
+@model ERP_System.Pages.SuperAdmin.ClientViewModel
+@{
+}
+<table class="table" style="width:50%;margin-left:20rem;">
+    <thead class="table-dark">
+        <tr>
+            <td>College Name</td>
+            <td>College Email</td>
+            <td>Purchase Date</td>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach(var Client in Model.client)
+            {
+                <tr>
+                <td>@Client.college_name</td>
+                <td>@Client.college_email</td>
+                <td>@Client.purchased</td>
+                </tr>
+            }
+
+       }
+    </tbody>
+</table>

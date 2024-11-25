@@ -12,5 +12,7 @@ namespace ERP_System.Data.Entity
         public int sub_id { get; set; }
         public DateOnly date {  get; set; }
         public TimeOnly time { get; set; }
+
+        public bool Active { get; set; }
     }
 }
