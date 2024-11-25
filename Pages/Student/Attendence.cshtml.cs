@@ -34,28 +34,17 @@ namespace ERP_System.Pages.Student
             }
             int? id = HttpContext.Session.GetInt32("stud_id");
             var store = _context.studentdetails.Find(id);
-            //sub = _context.subjects.Where(s => s.stream_id == store.stream_id).ToList();
+
             if (id == null)
             {
                 return Page()
 ;
             }
 
-            //attend =  (from a in _context.attences
-            //                   join s in _context.subjects
-            //                   on a.stream_id equals s.stream_id
-            //                   select new attendence
-            //                   {
-            //                       date = a.date,
-            //                       present = a.Active,
-            //                       sub_name = s.sub_name
-            //                   }).ToList();
-
-
             sub = (from s in _context.subjects
                    join a in _context.attences
                    on s.sub_id equals a.sub_id into attendanceGroup
-                   where s.stream_id == store.stream_id
+                   where s.stream_id == store.stream_id 
                    select new Subj
                    {
                        sub_id = s.sub_id,
@@ -65,10 +54,11 @@ namespace ERP_System.Pages.Student
                        college_id = s.college_id,
                        sub_name = s.sub_name,
                        is_active = s.is_active,
-                       AttendanceDetails = attendanceGroup.Select(a => new Attendence
+                       AttendanceDetails = attendanceGroup.Where(a => a.student_id == id).Select(a => new Attendence
                        {
                            date = a.date,
-                           Active = a.Active
+                           Active = a.Active,
+                           student_id = a.student_id
                        }).ToList()
                    }).ToList();
             return Page();
