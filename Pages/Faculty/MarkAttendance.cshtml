@@ -1,0 +1,112 @@
+﻿@page
+@model ERP_System.Pages.Faculty.MarkAttendanceModel
+@{
+    Layout = "~/Pages/Faculty/_FacultyLayout.cshtml";
+    ViewData["Title"] = "Mark Attendance";
+}
+
+<div class="container my-4">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h2 class="h4 mb-0">Mark Attendance</h2>
+        </div>
+        <div class="card-body">
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+
+            <form method="post" asp-page-handler="LoadStudents" class="mb-4">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="SelectedSubjectId" class="form-label">Select Subject</label>
+                            <select id="SelectedSubjectId" class="form-select" asp-for="SelectedSubjectId" required>
+                                <option value="">-- Select a Subject --</option>
+                                @foreach (var subject in Model.AssignedSubjects)
+                                {
+                                    <option value="@subject.sub_id">@subject.sub_name (Semester @subject.sem_id)</option>
+                                }
+                            </select>
+                            <span asp-validation-for="SelectedSubjectId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt-3">
+                        <button type="submit" class="btn btn-primary btn-lg w-100">Load Students</button>
+                    </div>
+                </div>
+            </form>
+
+            @if (Model.Students != null && Model.Students.Any())
+            {
+                <form method="post" asp-page-handler="MarkAttendance">
+                    <input type="hidden" asp-for="SelectedSubjectId" />
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="AttendanceDate" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="AttendanceDate"
+                                       asp-for="AttendanceDate" required
+                                       value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                                <span asp-validation-for="AttendanceDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="AttendanceTime" class="form-label">Time</label>
+                                <input type="time" class="form-control" id="AttendanceTime"
+                                       asp-for="AttendanceTime" required
+                                       value="@DateTime.Now.ToString("HH:mm")" />
+                                <span asp-validation-for="AttendanceTime" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Present</th>
+                                    <th>Registration No.</th>
+                                    <th>Student Name</th>
+                                    <th>Semester</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var student in Model.Students)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input"
+                                                       name="PresentStudentIds" value="@student.student_id" />
+                                            </div>
+                                        </td>
+                                        <td>@student.reg_num</td>
+                                        <td>@student.student_name</td>
+                                        <td>@student.sem_id</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-4 text-center">
+                        <button type="submit" class="btn btn-success btn-lg w-100">Submit Attendance</button>
+                    </div>
+                </form>
+            }
+
+            else if (Model.ShowNoStudentsMessage)
+            {
+            <div class="alert alert-info mt-3 text-center">
+                No students found for the selected subject.
+            </div>
+            }
+        </div>
+    </div>
+</div>
+

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+
 namespace ERP_System.Data.Entity
 {
     public class Faculty
