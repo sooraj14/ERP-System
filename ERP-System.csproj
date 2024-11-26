@@ -8,7 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ModelClass\" />
+    <Compile Remove="ModelClass\**" />
+    <Content Remove="ModelClass\**" />
+    <EmbeddedResource Remove="ModelClass\**" />
+    <None Remove="ModelClass\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\Images\img\" />
   </ItemGroup>
 

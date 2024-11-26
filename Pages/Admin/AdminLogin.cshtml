@@ -1,0 +1,41 @@
+﻿@page
+@model ERP_System.Pages.Admin.AdminLoginModel
+@{
+}
+
+<div class="container d-flex align-items-center justify-content-center vh-100">
+    <div class="w-30 border border-2 p-4 border border-warning rounded-3">
+        <form method="post">
+           
+
+            <div class="mb-3 ">
+                <label asp-for="adminlogin.college_email" class="form-label ">Email address</label>
+                <input type="email" asp-for="adminlogin.college_email" class="form-control border border-dark " placeholder="swarup@gmail.com">
+                <span class="text-danger" asp-validation-for="adminlogin.college_email"></span>
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+                <label asp-for="adminlogin.college_password" class="form-label">Password</label>
+                <input  type="password" asp-for="adminlogin.college_password" class="form-control border border-dark " placeholder="swarup@123">
+                <span class="text-danger" asp-validation-for="adminlogin.college_password"></span>
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input border border-dark" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Remember me</label>
+            </div>
+            <button type="submit" class=" form-control border border-dark  btn btn-primary" style="background-color:limegreen; color:white;">Login</button>
+
+            <div class="mt-2">
+                @{
+
+
+                    if (TempData["messageLoginfailed"] != null)
+                    {
+                        <p class="text-center text-danger">Login Failed</p>
+                    }
+
+                }
+            </div>
+        </form>
+    </div>
+</div>
