@@ -1,0 +1,57 @@
+﻿@page
+@model ERP_System.Pages.Admin.AdminSignupModel
+@{
+}
+
+
+<div class="container  d-flex align-items-center justify-content-center vh-100 ">
+    <div class="w-50 border border-2 p-4 rounded-3 shadow-lg bg-light">
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="adminsignup.college_refno" class="form-label">College-Register-NO</label>
+                <input asp-for="adminsignup.college_refno" class="form-control">
+                <span class="text-danger" asp-validation-for="adminsignup.college_refno"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="adminsignup.college_name" class="form-label">College Name</label>
+                <input asp-for="adminsignup.college_name" class="form-control">
+                <span class="text-danger" asp-validation-for="adminsignup.college_name"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="adminsignup.college_email" class="form-label">College Emial Addres</label>
+                <input asp-for="adminsignup.college_email" class="form-control">
+                <span class="text-danger" asp-validation-for="adminsignup.college_email"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="adminsignup.college_password" class="form-label">College Password</label>
+                <input asp-for="adminsignup.college_password" class="form-control" type="password">
+                <span  class="text-danger" asp-validation-for="adminsignup.college_password"></span>
+            </div>
+        @*     <div class="mb-3">
+                <label asp-for="adminsignup.purchased" class="form-label">Please Enter SignupDate</label>
+                <input asp-for="adminsignup.purchased" class="form-control" type="datetime">
+                <span class="text-danger" asp-validation-for="adminsignup.purchased"></span>
+            </div> *@
+
+            <div class="mb-3">
+                <button type="submit" class="btn me out</label> "style=" background-color:limegreen" asp-page-handler="Send">Sign up</button>
+
+                <a href="/Admin/AdminLogin"> Login </a>
+            </div>
+
+            <div class="mt-2">
+                @{
+
+
+                    if (TempData["messageLoginfailed"] != null)
+                    {
+                        <p class="text-center text-danger">Login Failed</p>
+                    }
+
+                }
+            </div>
+
+
+        </form>
+    </div>
+</div>

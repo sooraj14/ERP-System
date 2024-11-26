@@ -8,6 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+
+
+    <Compile Remove="ModelClass\**" />
+    <Content Remove="ModelClass\**" />
+    <EmbeddedResource Remove="ModelClass\**" />
+    <None Remove="ModelClass\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\img\" />
+  </ItemGroup>
+
+  <ItemGroup>
+
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
