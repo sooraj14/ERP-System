@@ -99,24 +99,31 @@ namespace ERP_System.Pages.Admin
             
             return Page();
         }
-        public IActionResult OnPostSubjectData(int stream_id)
+        public IActionResult OnPostSubjectData(int stream_id, List<string> subject_name)
         {
             int? college_id = HttpContext.Session.GetInt32("college_id");
             if(college_id== null)
             {
                 return RedirectToPage("/Admin/AdminLogin");
             }
-          
-            var subjectdetails = new Subject
+            foreach (var s in subject_name)
             {
-                sem_id = enetrsub.sem_id,
-                stream_id =  stream_id,
-               college_id= (int)college_id,
-                sub_name= enetrsub.sub_name,
-               is_active = true
+                if (!string.IsNullOrWhiteSpace(s))
+                {
+                    var subjectdetails = new Subject
+                    {
+                        sem_id = enetrsub.sem_id,
+                        stream_id = stream_id,
+                        college_id = (int)college_id,
+                        sub_name = s.Trim(),
+                        is_active = true
 
-            };
-            _context.subjects.Add(subjectdetails);
+                    };
+                    _context.subjects.Add(subjectdetails);
+
+                }
+            }
+           
             _context.SaveChanges();
 
             sub =  _context.subjects.Where(sd => sd.college_id == college_id).ToList();

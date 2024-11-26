@@ -83,7 +83,7 @@ namespace ERP_System.Pages.Admin
         public IActionResult OnPostTeacherDetails()
         {
             int? college_ids = HttpContext.Session.GetInt32("college_id");
-            var teacherdetails = new Faculty
+            var teacherdetails = new Data.Entity.Faculty
             {
                 fac_name = td.fac_name,
                 fac_email = td.fac_email,

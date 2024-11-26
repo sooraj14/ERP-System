@@ -38,7 +38,7 @@
              
             } else if (value === "view-subject") {
                 $("#viewsubjectdetails").show();
-               
+                $("#addbranch").hide();
                 $("#addsubjectdetails").hide();
                 $("#viewbeanch").hide();    
             } else {
@@ -53,6 +53,11 @@
                 '<input type="text" name="stream_name[]" class="form-control mt-2" placeholder="Enter branch name" />'
             );
         });
+
+
+        $("#addsubjectbtn").click(function() {
+            $("#subjectadded").append('<input type="text" name="subject_name[]" class="form-control mt-2" placeholder="Enter branch name" />')
+        })
     });
 </script>
 
@@ -108,19 +113,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                      @* <form method="post">
-                    @foreach (var s in Model.stream)
-                    {
-                      
-                            <tr>
-                                <td>@s.stream_name</td>
-                                <td>
-                                    <button asp-page-handler="DeleteBranch" asp-route-stream_id="@s.stream_id" class="btn btn-danger">Delete</button>
-                                </td>
-                            </tr>
-                        
-                    }
-                    </form> *@
                     @foreach (var s in Model.stream)
                     {
                         <form method="post">
@@ -143,10 +135,15 @@
                     <label asp-for="enetrsub.sem_id" class="form-label">Semester Number</label>
                     <input asp-for="enetrsub.sem_id" class="form-control" />
                 </div>
+
                 <div class="mb-3">
-                    <label asp-for="enetrsub.sub_name" class="form-label">Subject Name</label>
-                    <input asp-for="enetrsub.sub_name" class="form-control" />
+                <button type="button" id="addsubjectbtn" class="btn btn-primary mb-3">Create subject</button>
+                    <div class="mb-3" id="subjectadded">
+                    </div>
                 </div>
+
+             
+               
                 <select class="form-select" id="streamselect" name="stream_id" style="margin: 10px 0;">
                     <option value="" disabled selected>Select Branch</option>
                     @foreach (var s in Model.stream)
