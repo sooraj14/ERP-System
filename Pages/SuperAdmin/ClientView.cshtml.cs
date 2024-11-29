@@ -5,18 +5,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ERP_System.Pages.SuperAdmin
 {
-    public class DashboardModel : PageModel
+    public class ClientViewModel : PageModel
     {
         private readonly ApplicationDbContext _context;
-        public DashboardModel(ApplicationDbContext context)
+        public ClientViewModel(ApplicationDbContext context)
         {
             _context = context;
+            
         }
-        public int count { get; set; }
+        public List<CollegeAdmin> client { get; set; }
+
+       
         public void OnGet()
         {
-           count = _context.collegeadmins.Count();
-            
+            client = _context.collegeadmins.ToList();
         }
     }
 }

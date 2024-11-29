@@ -10,10 +10,7 @@ namespace ERP_System.Data.Entity
         public string college_name { get; set; }
         public string college_email { get; set; }
         public string college_pass { get; set; }
-        public string? subscription { get; set; }
         public DateTime purchased { get; set; }
-
-        public bool Active { get; set; }
 
     }
 }
