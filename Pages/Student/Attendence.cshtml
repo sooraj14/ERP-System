@@ -8,7 +8,7 @@
 
  
 
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -43,7 +43,7 @@
     @{
         foreach(var at in Model.sub)
         {
-                <div class="toggle-box" onclick="toggleDetails(this)">
+             <div class="toggle-box" onclick="toggleDetails(this)" style="padding:20px;margin-top:50px; ">
                     @at.sub_name
                     <div class="details">
                     <div class="container" style="display: flex; justify-content: space-between; gap: 20px; margin-top: 2rem; max-height: 400px; overflow: hidden;">
@@ -94,7 +94,7 @@
                     </div>
                  </div>
                  </div>
-                </div>
+            </div>
         }
     }
     
