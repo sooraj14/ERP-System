@@ -4,6 +4,8 @@
     Layout = "~/Pages/Faculty/_FacultyLayout.cshtml";
     ViewData["Title"] = "Faculty Dashboard";
     ViewData["FacultyName"] = Model.FacultyName;
+    ViewData["CollegeName"] = Model.CollegeName;
+
 }
 
 <div class="container-fluid">
@@ -68,16 +70,13 @@
                         <a class="btn btn-outline-success" asp-page="/Faculty/AddMarks">
                             <i class="fas fa-plus-circle me-2"></i>Add Marks
                         </a>
-                        <a class="btn btn-outline-warning" asp-page="/Faculty/EditMarks">
+                        <a class="btn btn-outline-warning" asp-page="/Faculty/ViewOrEdit">
                             <i class="fas fa-edit me-2"></i>View/Edit Marks
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-       
     </div>
 </div>
 
@@ -108,6 +107,7 @@
         .list-group-item:hover {
             background-color: #f8f9fa;
         }
+
 </style>
 
 <script>

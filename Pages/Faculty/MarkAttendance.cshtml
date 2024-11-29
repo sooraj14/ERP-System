@@ -3,91 +3,110 @@
 @{
     Layout = "~/Pages/Faculty/_FacultyLayout.cshtml";
     ViewData["Title"] = "Mark Attendance";
+   
 }
+<head>
+    <link rel="stylesheet" href="~/css/site.css" />
 
-<div class="container my-4">
-    <div class="card shadow-lg">
-        <div class="card-header bg-primary text-white">
+</head>
+
+<div class="container wider-container my-4">
+    <div class="card shadow-lg border-0">
+        <div class="card-header gradient-primary text-white text-center">
             <h2 class="h4 mb-0">Mark Attendance</h2>
         </div>
         <div class="card-body">
             @if (TempData["ErrorMessage"] != null)
             {
-                <div class="alert alert-danger">
+                <div class="alert alert-danger text-center">
                     @TempData["ErrorMessage"]
                 </div>
             }
 
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success text-center">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+
+      
             <form method="post" asp-page-handler="LoadStudents" class="mb-4">
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label asp-for="SelectedSubjectId" class="form-label">Select Subject</label>
-                            <select id="SelectedSubjectId" class="form-select" asp-for="SelectedSubjectId" required>
-                                <option value="">-- Select a Subject --</option>
-                                @foreach (var subject in Model.AssignedSubjects)
-                                {
-                                    <option value="@subject.sub_id">@subject.sub_name (Semester @subject.sem_id)</option>
-                                }
-                            </select>
-                            <span asp-validation-for="SelectedSubjectId" class="text-danger"></span>
-                        </div>
+                    <div class="col-md-6 mx-auto">
+                        <label asp-for="AttendanceData.SelectedSubjectId" class="form-label">Select Subject</label>
+                        <select id="SelectedSubjectId" class="form-select" asp-for="AttendanceData.SelectedSubjectId" required>
+                            <option value="">Select a Subject</option>
+                            @foreach (var subject in Model.AttendanceData.AssignedSubjects)
+                            {
+                                <option value="@subject.sub_id">
+                                    @subject.sub_name (Semester @subject.sem_id)
+                                </option>
+                            }
+                        </select>
+                        <span asp-validation-for="AttendanceData.SelectedSubjectId" class="text-danger"></span>
                     </div>
-                    <div class="col-md-12 mt-3">
-                        <button type="submit" class="btn btn-primary btn-lg w-100">Load Students</button>
-                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-primary1 btn-lg px-4">Load Students</button>
                 </div>
             </form>
 
-            @if (Model.Students != null && Model.Students.Any())
+            @if (Model.AttendanceData.Students != null && Model.AttendanceData.Students.Any())
             {
                 <form method="post" asp-page-handler="MarkAttendance">
-                    <input type="hidden" asp-for="SelectedSubjectId" />
+                    <input type="hidden" asp-for="AttendanceData.SelectedSubjectId" />
 
                     <div class="row mb-4">
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label asp-for="AttendanceDate" class="form-label">Date</label>
-                                <input type="date" class="form-control" id="AttendanceDate"
-                                       asp-for="AttendanceDate" required
-                                       value="@DateTime.Now.ToString("yyyy-MM-dd")" />
-                                <span asp-validation-for="AttendanceDate" class="text-danger"></span>
-                            </div>
+                            <label asp-for="AttendanceData.AttendanceDate" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="AttendanceDate"
+                                   asp-for="AttendanceData.AttendanceDate" required
+                                   value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                            <span asp-validation-for="AttendanceData.AttendanceDate" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label asp-for="AttendanceTime" class="form-label">Time</label>
-                                <input type="time" class="form-control" id="AttendanceTime"
-                                       asp-for="AttendanceTime" required
-                                       value="@DateTime.Now.ToString("HH:mm")" />
-                                <span asp-validation-for="AttendanceTime" class="text-danger"></span>
-                            </div>
+                            <label asp-for="AttendanceData.AttendanceTime" class="form-label">Time</label>
+                            <input type="time" class="form-control" id="AttendanceTime"
+                                   asp-for="AttendanceData.AttendanceTime" required
+                                   value="@DateTime.Now.ToString("HH:mm")" />
+                            <span asp-validation-for="AttendanceData.AttendanceTime" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover">
+                        <table class="table table-bordered table-hover text-center">
                             <thead class="table-light">
                                 <tr>
                                     <th>Present</th>
                                     <th>Registration No.</th>
                                     <th>Student Name</th>
                                     <th>Semester</th>
+                                    <th>Total Classes</th>
+                                    <th>Attended Classes</th>
+                                    <th>Attendance %</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var student in Model.Students)
+                                @foreach (var student in Model.AttendanceData.Students)
                                 {
                                     <tr>
                                         <td>
-                                            <div class="form-check">
+                                            <div class="form-check d-flex justify-content-center">
                                                 <input type="checkbox" class="form-check-input"
-                                                       name="PresentStudentIds" value="@student.student_id" />
+                                                       name="AttendanceData.PresentStudentIds" value="@student.student_id" />
                                             </div>
                                         </td>
                                         <td>@student.reg_num</td>
                                         <td>@student.student_name</td>
                                         <td>@student.sem_id</td>
+                                        <td>@student.TotalClasses</td>
+                                        <td>@student.AttendedClasses</td>
+                                        <td>
+                                            <span class="badge @(student.AttendancePercentage >= 75 ? "bg-success" : "bg-warning")">
+                                                @student.AttendancePercentage%
+                                            </span>
+                                        </td>
                                     </tr>
                                 }
                             </tbody>
@@ -95,18 +114,16 @@
                     </div>
 
                     <div class="mt-4 text-center">
-                        <button type="submit" class="btn btn-success btn-lg w-100">Submit Attendance</button>
+                        <button type="submit" class="btn btn-attend btn-lg px-5">Submit Attendance</button>
                     </div>
                 </form>
             }
-
-            else if (Model.ShowNoStudentsMessage)
+            else if (Model.AttendanceData.ShowNoStudentsMessage)
             {
-            <div class="alert alert-info mt-3 text-center">
-                No students found for the selected subject.
-            </div>
+                <div class="alert alert-info mt-3 text-center">
+                    No students found for the selected subject.
+                </div>
             }
         </div>
     </div>
 </div>
-

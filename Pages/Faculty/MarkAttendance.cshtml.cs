@@ -1,9 +1,10 @@
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using ERP_System.Data.Entity;
 using ERP_System.Data.context;
-using System.ComponentModel.DataAnnotations;
+using ERP_System.ModelClass;
+using System.Linq;
 
 namespace ERP_System.Pages.Faculty
 {
@@ -16,141 +17,121 @@ namespace ERP_System.Pages.Faculty
             _context = context;
         }
 
-        public List<Subject> AssignedSubjects { get; set; } = new();
-        public List<Studentinfo> Students { get; set; } = new();
-        public bool ShowNoStudentsMessage { get; set; }
+       
+        public AttendanceModel AttendanceData { get; set; } = new();
 
-        [BindProperty]
-        [Required(ErrorMessage = "Please select a subject")]
-        public int SelectedSubjectId { get; set; }
-
-        [BindProperty]
-        [Required(ErrorMessage = "Date is required")]
-        public DateOnly AttendanceDate { get; set; }
-
-        [BindProperty]
-        [Required(ErrorMessage = "Time is required")]
-        public TimeOnly AttendanceTime { get; set; }
-
-        [BindProperty]
-        public List<int> PresentStudentIds { get; set; } = new();
-
-        public async Task<IActionResult> OnGetAsync()
+        public IActionResult OnGet()
         {
             var facultyId = HttpContext.Session.GetInt32("FacultyID");
             if (facultyId == null)
             {
-                return RedirectToPage("/Faculty/FacultyLogin");
+                return RedirectToPage("/Faculty/loginfaculty");
             }
-
-            await LoadAssignedSubjects(facultyId.Value);
+            
+            LoadAssignedSubjects(facultyId.Value);
             return Page();
         }
 
-        public async Task<IActionResult> OnPostLoadStudentsAsync()
+        public IActionResult OnPostLoadStudents(AttendanceModel attendanceData)
         {
+            AttendanceData = attendanceData;
+
             var facultyId = HttpContext.Session.GetInt32("FacultyID");
             if (facultyId == null)
             {
-                return RedirectToPage("/Faculty/FacultyLogin");
+                return RedirectToPage("/Faculty/loginfaculty");
             }
 
-            await LoadAssignedSubjects(facultyId.Value);
+            LoadAssignedSubjects(facultyId.Value);
 
-            if (SelectedSubjectId > 0)
+            if (attendanceData.SelectedSubjectId > 0)
             {
-                var subject = await _context.subjects
-                    .FirstOrDefaultAsync(s => s.sub_id == SelectedSubjectId && s.fac_id == facultyId);
+                var subject = _context.subjects
+                    .FirstOrDefault(s => s.sub_id == attendanceData.SelectedSubjectId && s.fac_id == facultyId);
 
                 if (subject != null)
                 {
-                    Students = await _context.studentdetails
+                    var students = _context.studentdetails
                         .Where(s => s.stream_id == subject.stream_id
                                && s.sem_id == subject.sem_id
                                && s.is_active)
                         .OrderBy(s => s.student_name)
-                        .ToListAsync();
+                        .ToList();
 
-                    ShowNoStudentsMessage = !Students.Any();
+                    AttendanceData.Students = CalculateStudentAttendance(students, attendanceData.SelectedSubjectId);
+                    AttendanceData.ShowNoStudentsMessage = !AttendanceData.Students.Any();
                 }
             }
 
             return Page();
         }
 
-        public async Task<IActionResult> OnPostMarkAttendanceAsync()
+        public IActionResult OnPostMarkAttendance(AttendanceModel attendanceData)
         {
+            AttendanceData = attendanceData;
+
             var facultyId = HttpContext.Session.GetInt32("FacultyID");
             if (facultyId == null)
             {
-                return RedirectToPage("/Faculty/FacultyLogin");
+                return RedirectToPage("/Faculty/loginfaculty");
             }
 
             if (!ModelState.IsValid)
             {
                 TempData["ErrorMessage"] = "Please fill in all required fields.";
-                await LoadAssignedSubjects(facultyId.Value);
+                LoadAssignedSubjects(facultyId.Value);
                 return Page();
             }
 
-            try
+            var subject = _context.subjects
+                .FirstOrDefault(s => s.sub_id == attendanceData.SelectedSubjectId);
+
+            if (subject == null)
             {
-                var subject = await _context.subjects
-                    .FirstOrDefaultAsync(s => s.sub_id == SelectedSubjectId);
-
-                if (subject == null)
-                {
-                    TempData["ErrorMessage"] = "Selected subject not found.";
-                    await LoadAssignedSubjects(facultyId.Value);
-                    return Page();
-                }
-
-                var existingAttendance = await _context.attences
-                    .AnyAsync(a => a.sub_id == SelectedSubjectId
-                             && a.date == AttendanceDate);
-
-                if (existingAttendance)
-                {
-                    TempData["ErrorMessage"] = "Attendance for this subject and date already exists.";
-                    await LoadAssignedSubjects(facultyId.Value);
-                    return Page();
-                }
-
-                var eligibleStudents = await _context.studentdetails
-                    .Where(s => s.stream_id == subject.stream_id
-                           && s.sem_id == subject.sem_id
-                           && s.is_active)
-                    .Select(s => s.student_id)
-                    .ToListAsync();
-
-                var attendanceRecords = eligibleStudents.Select(studentId => new Attendence
-                {
-                    student_id = studentId,
-                    college_id = subject.college_id,
-                    stream_id = subject.stream_id,
-                    sub_id = SelectedSubjectId,
-                    date = AttendanceDate,
-                    time = AttendanceTime,
-/*                    is_present = PresentStudentIds.Contains(studentId)
-*/                }).ToList();
-
-                await _context.attences.AddRangeAsync(attendanceRecords);
-                await _context.SaveChangesAsync();
-
-                TempData["SuccessMessage"] = "Attendance marked successfully!";
-                return RedirectToPage("/Faculty/FacultyDashboard");
-            }
-            catch (Exception ex)
-            {
-                TempData["ErrorMessage"] = "An error occurred while marking attendance. Please try again.";
-                await LoadAssignedSubjects(facultyId.Value);
+                TempData["ErrorMessage"] = "Selected subject not found.";
+                LoadAssignedSubjects(facultyId.Value);
                 return Page();
             }
+
+            var existingAttendance = _context.attences
+                .Any(a => a.sub_id == attendanceData.SelectedSubjectId
+                       && a.date == attendanceData.AttendanceDate);
+
+            if (existingAttendance)
+            {
+                TempData["ErrorMessage"] = "Attendance for this subject and date already exists.";
+                LoadAssignedSubjects(facultyId.Value);
+                return Page();
+            }
+
+            var eligibleStudents = _context.studentdetails
+                .Where(s => s.stream_id == subject.stream_id
+                       && s.sem_id == subject.sem_id
+                       && s.is_active)
+                .Select(s => s.student_id)
+                .ToList();
+
+            var attendanceRecords = eligibleStudents.Select(studentId => new Attendence
+            {
+                student_id = studentId,
+                college_id = subject.college_id,
+                stream_id = subject.stream_id,
+                sub_id = attendanceData.SelectedSubjectId,
+                date = attendanceData.AttendanceDate,
+                time = attendanceData.AttendanceTime,
+                Active = attendanceData.PresentStudentIds.Contains(studentId)
+            }).ToList();
+
+            _context.attences.AddRange(attendanceRecords);
+            _context.SaveChanges();
+
+            TempData["SuccessMessage"] = "Attendance marked successfully!";
+            return RedirectToPage("/Faculty/FacultyDashboard");
         }
 
-        private async Task LoadAssignedSubjects(int facultyId)
+        private void LoadAssignedSubjects(int facultyId)
         {
-            AssignedSubjects = await _context.facultysubjects
+            AttendanceData.AssignedSubjects = _context.facultysubjects
                 .Where(fs => fs.fac_id == facultyId)
                 .Join(
                     _context.subjects,
@@ -160,7 +141,41 @@ namespace ERP_System.Pages.Faculty
                 )
                 .Where(s => s.is_active)
                 .OrderBy(s => s.sub_name)
-                .ToListAsync();
+                .ToList();
+        }
+
+        private List<StudentAttendanceInfo> CalculateStudentAttendance(List<Studentinfo> students, int subjectId)
+        {
+            var studentAttendanceInfoList = new List<StudentAttendanceInfo>();
+
+            foreach (var student in students)
+            {
+                var totalClasses = _context.attences
+                    .Count(a => a.sub_id == subjectId
+                             && a.student_id == student.student_id);
+
+                var attendedClasses = _context.attences
+                    .Count(a => a.sub_id == subjectId
+                             && a.student_id == student.student_id
+                             && a.Active);
+
+                double attendancePercentage = totalClasses > 0
+                    ? (double)attendedClasses / totalClasses * 100
+                    : 0;
+
+                studentAttendanceInfoList.Add(new StudentAttendanceInfo
+                {
+                    student_id = student.student_id,
+                    student_name = student.student_name,
+                    reg_num = student.reg_num,
+                    sem_id = student.sem_id,
+                    TotalClasses = totalClasses,
+                    AttendedClasses = attendedClasses,
+                    AttendancePercentage = Math.Round(attendancePercentage, 2)
+                });
+            }
+
+            return studentAttendanceInfoList;
         }
     }
 }

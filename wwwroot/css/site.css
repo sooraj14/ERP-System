@@ -20,6 +20,180 @@ html {
 body {
   margin-bottom: 60px;
 }
+/*body {*/
+   /* background-color: #ecf0f1;*/
+    /*color: #2c3e50;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}*/
+
+.wider-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(46, 204, 113, 0.1));
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.card {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.11);
+    background: linear-gradient(to right, rgba(52, 152, 219, 0.05), rgba(46, 204, 113, 0.05));
+}
+
+.card-header {
+    background: linear-gradient(90deg, #2c2c2c, #6e6e6e, #2c2c2c);
+    color: white;
+    padding: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 3px solid #e74c3c;
+}
+
+.form-select,
+.form-control {
+    border: 2px solid #3498db;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+}
+
+    .form-select:focus,
+    .form-control:focus {
+        border-color: #2ecc71;
+        box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
+        outline: none;
+    }
+
+.btn-primary1,
+.btn-attend {
+    background: linear-gradient(to right, #3498db, #2ecc71);
+    border: none;
+    transition: transform 0.3s ease;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 30px;
+    text-transform: uppercase;
+}
+
+    .btn-primary1:hover,
+    .btn-attend:hover {
+        transform: scale(1.05);
+        background: linear-gradient(to right, #2ecc71, #3498db);
+    }
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+    .table thead {
+        background: linear-gradient(90deg, #4a4a4a, #2c2c2c);
+    }
+
+        .table thead th {
+            background: linear-gradient(90deg, #2c3e50, #34495e, #2c3e50);
+            color: whitesmoke;
+            text-transform: uppercase;
+            padding: 12px;
+            border: none;
+            text-align: center;
+        }
+
+    .table tbody tr:nth-child(even) {
+        background-color: rgba(52, 152, 219, 0.05);
+    }
+
+    .table tbody tr:nth-child(odd) {
+        background-color: rgba(46, 204, 113, 0.05);
+    }
+
+    .table tbody tr:hover {
+        background-color: rgba(241, 196, 15, 0.1);
+        transition: background-color 0.3s ease;
+    }
+
+    .table tbody td {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #e0e0e0;
+    }
+
+.form-check {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-check-input {
+    width: 18px;
+    height: 18px;
+}
+
+.badge {
+    font-size: 0.9em;
+    padding: 6px 10px;
+    border-radius: 20px;
+}
+
+    .badge.bg-success {
+        background-color: #2ecc71 !important;
+        color: white;
+    }
+
+    .badge.bg-warning {
+        background-color: #f39c12 !important;
+        color: white;
+    }
+
+.alert {
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.alert-danger {
+    background-color: rgba(231, 76, 60, 0.1);
+    border: 2px solid #e74c3c;
+    color: #e74c3c;
+}
+
+.alert-success {
+    background-color: rgba(46, 204, 113, 0.1);
+    border: 2px solid #2ecc71;
+    color: #2ecc71;
+}
+
+.alert-info {
+    background-color: rgba(52, 152, 219, 0.1);
+    border: 2px solid #3498db;
+    color: #3498db;
+}
+
+@media (max-width: 767px) {
+    .wider-container {
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(241, 241, 241, 0.7));
+        padding: 0 10px;
+    }
+
+    .table {
+        font-size: 0.9rem;
+    }
+
+    .btn-primary {
+        width: 100%;
+    }
+}
 
 
 
