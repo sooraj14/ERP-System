@@ -1,0 +1,103 @@
+﻿            @page
+            @model ERP_System.Pages.Admin.SubjectModel
+            @{
+                Layout = "_AdminLayout";
+            }
+            <head>
+
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+                <link href="~/css/site.css" rel="stylesheet">
+            </head>
+
+ <body style="background-color: #f8f9fa;">
+
+    <nav class="top-navbar">
+              <div class="nav-item" style="padding: 5px; border: 2px solid #000; border-radius: 8px; width: fit-content; background-color: #f8f9fa;">
+
+                            <select class=" form-select custom-select-arrow btn btn-light text-primary" id="subject-select">
+                                Students
+                                <option class="text-primary" value="" disabled selected>Subject</option>
+                                <option class="text-primary" value="add-subject">Add Subject</option>
+                                <option class="text-primary" value="view-subject">View Subject</option>
+                            </select>
+
+              </div>
+    </nav>
+
+
+
+
+      <div style=" width:500px; margin-left:400px; padding-top:100px;">
+           <div id="addsubjectdetails" style="display: none;">
+                 <form method="post" style="box-shadow: 2px 2px 20px black" class="border border-dark p-3">
+                    <div class="mb-3">
+                        <label asp-for="enetrsub.sem_id" class="form-label">Semester Number</label>
+                        <input asp-for="enetrsub.sem_id" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                        <button type="button" id="addsubjectbtn" class="btn btn-primary mb-3">Create subject</button>
+                        <div class="mb-3" id="subjectadded">
+                        </div>
+                    </div>
+
+
+
+                    <select class="form-select" id="streamselect" name="stream_id" style="margin: 10px 0;">
+                        <option value="" disabled selected>Select Branch</option>
+                        @foreach (var s in Model.stream)
+                        {
+                            <option value="@s.stream_id">@s.stream_name</option>
+                        }
+                    </select>
+                    <button type="submit" asp-page-handler="SubjectData" class="btn btn-primary mb-3">Save Subject</button>
+                </form>
+           </div>
+
+                                   <!-- View Subject Section -->
+       
+                  <div id="viewsubjectsstream" style="display:none; box-shadow: 2px 2px 20px black; margin-top:100px; gap:5px;" class="border border-dark p-3">
+                        <div class="d-flex">
+                    @{
+
+                        @foreach (var sc in Model.stream)
+                        {
+                            <div class="selectbranchforsubject" data-stream-id="@sc.stream_id">
+                                        <div class="btn btn-success mx-3 fw-bold     " value="@sc.stream_id">@sc.stream_name</div>
+                            </div>
+                        }
+                    }
+                    </div>
+                 </div>
+
+            <div id="viewsubjectdetails" style="display: none; ">
+
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+
+                                <th>Semester</th>
+                                <th>Subject Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var sd in Model.sub)
+                            {
+                                <tr class="subject-row" data-stream-id="@sd.stream_id">
+
+                                    <td>@sd.sem_id</td>
+                                    <td>@sd.sub_name</td>
+                                </tr>
+                            }
+                        </tbody>
+                     </table>
+      
+             </div>
+      </div>
+
+      
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script src="~/js/sidebar.js"></script>
+  </body>

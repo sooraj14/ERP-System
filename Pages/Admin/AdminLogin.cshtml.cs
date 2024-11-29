@@ -37,7 +37,7 @@ namespace ERP_System.Pages.Admin
                 if (admincheck != null)
                 {
                     HttpContext.Session.SetInt32("college_id", admincheck.college_id);
-                    return RedirectToPage("/Admin/AdminDashboard");
+                    return RedirectToPage("/Admin/EmptyPage");
                 }
 
                 else

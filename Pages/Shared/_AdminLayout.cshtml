@@ -1,60 +1,307 @@
-﻿<!DOCTYPE html>
+﻿
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ERP System</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>@ViewData["Title"] - ERP_System</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ERP_System.styles.css" asp-append-version="true" />
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-width: 250px;
+            --sidebar-collapsed-width: 80px;
+            --top-nav-height: 60px;
+            --primary-bg-color: #2c3e50;
+            --secondary-bg-color: #34495e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .top-navbar {
+            position: fixed;
+            top: 0;
+            left: var(--sidebar-width);
+            right: 0;
+            height: var(--top-nav-height);
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1000;
+            transition: left 0.3s;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background-color: var(--primary-bg-color);
+            transition: width 0.3s;
+            overflow-x: hidden;
+            z-index: 1020;
+            display: flex;
+            flex-direction: column;
+        }
+
+            .sidebar.collapsed {
+                width: var(--sidebar-collapsed-width);
+            }
+
+                .sidebar.collapsed + .top-navbar {
+                    left: var(--sidebar-collapsed-width);
+                }
+
+                    .sidebar.collapsed + .top-navbar + .content {
+                        margin-left: var(--sidebar-collapsed-width);
+                        width: calc(100% - var(--sidebar-collapsed-width));
+                    }
+
+        .sidebar-toggle {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            cursor: pointer;
+            color: #ffffff;
+            z-index: 1030;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            padding: 20px;
+            color: #ffffff;
+            background-color: var(--secondary-bg-color);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+            .sidebar-header .user-icon {
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+
+        .sidebar .nav-link {
+            color: #adb5bd;
+            padding: 15px 20px;
+            transition: color 0.3s, background-color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+            .sidebar .nav-link:hover,
+            .sidebar .nav-link.active {
+                color: #ffffff;
+                background-color: rgba(255,255,255,0.1);
+            }
+
+            .sidebar .nav-link i {
+                margin-right: 10px;
+                width: 20px;
+                text-align: center;
+            }
+
+            .sidebar .nav-link span {
+                display: inline;
+            }
+
+        .sidebar.collapsed .nav-link span {
+            display: none;
+        }
+
+        .sidebar.collapsed .sidebar-header .faculty-details {
+            display: none;
+        }
+
+        .sidebar.collapsed .sidebar-header .user-icon {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .logout-section {
+            margin-top: auto;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+            .logout-section .nav-link {
+                color: #e74c3c;
+            }
+
+        .content {
+            margin-left: var(--sidebar-width);
+            margin-top: var(--top-nav-height);
+            padding: 20px;
+            transition: margin-left 0.3s;
+            background-color: #f4f6f9;
+            min-height: calc(100vh - var(--top-nav-height));
+        }
+
+        .top-navbar .system-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-bg-color);
+        }
+
+        .top-navbar .user-section {
+            display: flex;
+            align-items: center;
+        }
+
+            .top-navbar .user-section .user-icon {
+                margin-right: 10px;
+                color: var(--primary-bg-color);
+            }
+
+            .top-navbar .user-section .user-name {
+                font-weight: 500;
+                color: #2c3e50;
+            }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">ERP_System</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                  @*   <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">SuperAdmin</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin">CollegeAdmin</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Student</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Faculty</a>
-                        </li>
-                    </ul> *@
-                </div>
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-toggle" id="sidebarToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <!-- Faculty Info -->
+        <div class="sidebar-header">
+            <i class="fas fa-user-circle user-icon"></i>
+            <div class="faculty-details">
+                <div class="faculty-name">SMVITM</div>
+                
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        </div>
+
+        <div class="nav flex-column mt-4">
+            <a class="nav-link active" asp-page="/Admin/AdminDashboard">
+                <i class="fas fa-home text-primary"></i>
+                <span>STUDENTS</span>
+            </a>
+            <a class="nav-link" asp-page="/Admin/Facultysubject">
+                <i class="fas fa-check-square text-success"></i>
+                <span>FACULTY-SUBJECT</span>
+            </a>
+            <a class="nav-link" asp-page="/Admin/Teacher">
+                <i class="fas fa-plus-circle text-info"></i>
+                <span>TEACHER</span>
+            </a>
+            <a class="nav-link" asp-page="/Admin/AccademicStructure">
+                <i class="fas fa-edit text-warning"></i>
+                <span>BRANCH</span>
+            </a>
+
+            <a class="nav-link" asp-page="/Admin/Subject">
+                <i class="fas fa-edit text-warning"></i>
+                <span>SUBJECT</span>
+            </a>
+
+            <a class="nav-link" asp-page="/Admin/Subject">
+                <i class="fas fa-edit text-warning"></i>
+                <span> Add Notice</span>
+            </a>
+        </div>
+
+        <!-- Logout Section -->
+        <div class="logout-section">
+            <a class="nav-link" asp-page="/Admin/AdminLogin">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </nav>
+
+
+    <!-- Top Navbar -->
+    <nav class="top-navbar">
+        <div class="system-name">ERP System</div>
+        <div class="user-section">
+            <i class="fas fa-user-circle user-icon fa-2x"></i>
+            <span class="user-name">@ViewData["FacultyName"]</span>
+        </div>
+    </nav>
+
+    <!-- Content Wrapper -->
+    <div class="content">
+        @RenderBody()
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - ERP_System - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
-    @await RenderSectionAsync("Scripts", required: false)
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('sidebarToggle').addEventListener('click', function () {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        });
+    </script>
 </body>
 </html>
+
+
+
+@* <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggleable Details Box</title>
+    <style>
+        .toggle-box {
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px auto;
+            cursor: pointer;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+
+        .details {
+            display: none;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            margin-top: 10px;
+            background-color: #f1f1f1;
+        }
+
+        .toggle-box.open {
+            background-color: #e9f7f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="toggle-box" onclick="toggleDetails(this)">
+        Click to toggle details
+        <div class="details">
+            <p>Here are the details! You can put any content here.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleDetails(element) {
+            const details = element.querySelector('.details');
+            const isOpen = details.style.display === 'block';
+            details.style.display = isOpen ? 'none' : 'block';
+            element.classList.toggle('open', !isOpen);
+        }
+    </script>
+</body>
+</html>
+ *@

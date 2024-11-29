@@ -40,7 +40,7 @@ namespace ERP_System.Pages.Admin
             };
             _context.collegeadmins.Add(ca);
             _context.SaveChanges();
-            return RedirectToPage("Login");
+            return RedirectToPage("/Admin/AdminLogin");
         }
 
 
