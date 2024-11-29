@@ -17,6 +17,8 @@ namespace ERP_System.Pages.Faculty
         }
 
         public string FacultyName { get; set; }
+        public string CollegeName { get; set; }
+
         public List<Subject> AssignedSubjects { get; set; } = new List<Subject>();
 
         public IActionResult OnGet()
@@ -39,6 +41,12 @@ namespace ERP_System.Pages.Faculty
                           (fs, s) => s)
                     .Where(s => s.is_active)
                     .ToList();
+
+                var college = _context.collegeadmins.FirstOrDefault(c => c.college_id == faculty.college_id);
+                if (college != null)
+                {
+                    CollegeName = college.college_name;
+                }
             }
             else
             {
