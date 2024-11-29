@@ -11,7 +11,7 @@ obj/
 *.vscode/
 
 #images
-
+Images/
 
 
 # ASP.NET-specific folders
@@ -77,6 +77,6 @@ appsettings.Development.json
 appsettings.Production.json
 appsettings.Test.json
 
-
+wwwroot/Uploads/*
 Migrations/
 https://www.msn.com/en-in/sports/cricket/cricket-internationals/game-center/sp-id-243108?ocid=winp2fp&cvid=9f8d97d9ccf546f89dab1d5378fb4857

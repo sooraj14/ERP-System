@@ -4,333 +4,231 @@
 }
 <html lang="en">
 <head>
-    
-    
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            
-            $("#dropdown .col-md-4").on('click',function()
-            {
-                const  value = $(this).data("value")
-                if(value == "external-marks")
-               {
 
-                  $("#external").show();
-                  $("#internal").hide();
-                  
-               }
-               else if(value == "internal-marks")
-               {
-                   $("#internal").show();
-                   $("#external").hide();
-               }
-
-            });
-           
-        });
-
-       
-
-
-    </script>
-
-    <style>
-        .tablefirst, .tablesecond {
-            text-align: center;
-        }
-
-        .marksheet-box {
-            background-image: url(http://peoplehelp.in/mewaruni/images/marksheet-bg.png);
-            border: 2px solid #000;
-            padding: 15px;
-            margin-top: 20px;
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: contain;
-        }
-
-        .uni-logo, .uni-add, .txt-cntr {
-            text-align: center;
-        }
-
-            .uni-add p {
-                width:;
-                margin: 10px auto;
-            }
-
-        .Studen_Detail {
-            margin: 20px 0;
-        }
-
-            .Studen_Detail p {
-                margin-bottom: 0px;
-            }
-
-        hr {
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-            border: 0;
-            border-top: 1px solid rgba(0, 0, 0, 0.32);
-        }
-
-        * {
-            border-color: #00000075 !important;
-        }
-
-        .table-div thead th {
-            border-bottom: 0px !important;
-        }
-    </style>
+ 
 
 
 </head>
-
 <body>
-    <div class="" id="dropdown" style="margin-left:10rem;">
-        <div class="col-md-4" data-value="internal-marks">
-            <div class="card text-white  mb-3" >
-                <div class="card-body" >
-                    <h5 class="card-title" style="color:black;">Internals</h5>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4" data-value="external-marks">
-            <div class="card text-white  mb-3" >
-                <div class="card-body">
-                    <h5 class="card-title" style="color:black;">Final</h5>
-                   
-                </div>
-            </div>
-        </div>
-    </div>
 
-
-    @if (Model.marks.Any(s => s.internal_marks == 0))
-    {
-        <p>One or more subjects have an internal mark of 0.</p>
-    }
-    else
-    {
-    <div style=" display:none;" id="internal">
-   
-        <div class="row">
-            <div class="container">
+    <section>
+        <div class="container-fluid">
+            <div class="row">
                 <div class="col-12">
-                    <div class="table-div">
-                        <table class="table table-bordered tablefirst">
-                            <thead>
-                                <tr>
-                                    <th  style="vertical-align: middle;">Subjects</th>
-                                    @foreach (var type in Model.marks.Select(m => m.internal_type).Distinct())
-                                    {
-                                        <th>@type</th>
-                                    }
-                                </tr>
-                            </thead>
-                            <tbody>
-                               
-                                @foreach (var subjectGroup in Model.marks.GroupBy(m => m.subject_name))
-                                {
-                                    <tr>
-                                        <th>@subjectGroup.Key</th>
-                                      
-                                        @foreach (var type in Model.marks.Select(m => m.internal_type).Distinct())
-                                        {
-                                            <td>
-                                                @subjectGroup.FirstOrDefault(m => m.internal_type == type)?.internal_marks 
-                                            </td>
-                                        }
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        </div>
-    }
-   
-
-
-   
-
-    <section id="external" style="display:none;">
-        
-        <button id="print-btn" class="btn-danger"  onclick="printPage()" style="margin-left:30rem; padding:10px; border-radius:5px;" >Download</button>
-
-        @foreach(var news in @Model.Newuser)
-        {
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="marksheet-box">
-                            <div class="row">
-                                <div class="col-sm-3 txt-cntr"></div>
-                                <div class="col-sm-6 uni-logo">
-                                    <img src="http://peoplehelp.in/mewaruni/images/mewaruniversitylogo.png" alt="uni-logo" />
-                                </div>
-                                <div class="col-sm-3 txt-cntr"></div>
-                                <div class="col-sm-12 uni-add">
-                                    <h2>@news.college_name</h2>
-                                    <p>Address: NH - 79 Channasandra, RR Nagar, Karnataka-312901 <br>(www.rnsit.org)</p>
-                                </div>
+                    <div class="marksheet-box">
+                        <div class="row">
+                            <div class="col-sm-3 txt-cntr"></div>
+                            <div class="col-sm-6 uni-logo">
+                                <img src="http://peoplehelp.in/mewaruni/images/mewaruniversitylogo.png" alt="uni-logo" />
                             </div>
-                            <hr>
-                            <div class="row">
-
-                                <div class=" streamName  txt-cntr">
-                                    <h3>Bachelor of Engineering (B.E)</h3>
-                                    <h5>
-                                        Grade Card<h5>
-                                            <p>Examination Year: May - 19<p>
-                                </div>
-                                <div class="col-sm-4">
-                                </div>
-                            </div>
-                            <div class="row Studen_Detail">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col ">
-                                            <h5><span><strong>Name :</strong></span><strong> @news.stuname</strong></h5>
-                                            <h5><strong>USN:</strong><strong> @news.reg_number</strong></h5>
-                                            <h5><strong>Course:</strong><strong> @news.branchname</strong></h5>
-                                            <h5><strong>Semester:</strong><strong>@news.semester</strong></h5>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="row">
-                                <div class="container">
-                                    <div class="col-12">
-                                        <div class="table-div">
-                                            <table class="table table-bordered tablefirst">
-                                                <thead>
-                                                    <tr>
-                                 
-
-                                                        <th rowspan="2" style="vertical-align: middle;">Subjects</th>
-                                                        <th colspan="@Model.marks.Select(m=>m.internal_type).Distinct().Count()">Internals</th>
-                                                        <th rowspan="2" style="vertical-align: middle;">Total</th>
-                                                        <th rowspan="2" style="vertical-align: middle;">External</th>
-                                                        <th rowspan="2" style="vertical-align: middle;">Total</th>
-                                                        <th rowspan="2" colspan="3" style="vertical-align: middle;">Result</th>
-                                                    </tr>
-                                                    <tr>
-                                                        @foreach (var type in @Model.marks.Select(m => m.internal_type).Distinct())
-                                                        {
-                                                            <th>@type</th>
-                                                        }
-
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach(var subject in @Model.marks.GroupBy(m=>m.subject_name))
-                                                    {
-                                                        <tr>
-                                                            <th>@subject.Key</th>
-
-                                                            @foreach (var data in Model.marks.Select(m => m.internal_type).Distinct())
-                                                            {
-                                                                var internalMarks = subject.FirstOrDefault(m => m.internal_type == data)?.internal_marks ?? 0;
-                                                                var displayMarks = internalMarks == 0 ? "A" : internalMarks.ToString();
-
-                                                                <td>@displayMarks</td>
-                                                            }
-
-                                                            
-                                                            @{
-
-                                                            var internalTotal = subject.Sum(m => m.internal_marks);
-                                                            var intmarks = internalTotal / 150.0 * 40;
-                                                            var externalmarks = subject.FirstOrDefault().external_marks;
-                                                            var extmarks = externalmarks / 100.0 * 60;
-                                                            var overall = Math.Round(intmarks + extmarks,2);
-
-                                                            }
-                                                            
-                                                            <td>@internalTotal</td>
-                                                            <td>@externalmarks</td>
-                                                            <td>@overall</td>
-                                                            @if(overall>35)
-                                                            {
-                                                                <td>P</td>
-                                                            }
-                                                            else
-                                                            {
-                                                                <td>F</td>
-                                                            }
-
-
-                                                        </tr>
-                                                    }
-
-                                                        
-                                                   
-                                                </tbody>
-                                                </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-sm-4 txt-cntr">
-                                    <p style="height:40px;"></p>
-                                    <p><strong>Date of Issue :</strong><strong> 11 June 2019</strong></p>
-                                </div>
-                                <div class="col-sm-4 txt-cntr">
-                                    <p style="height:40px;"></p>
-                                    <p><strong>University Stamp </strong></p>
-                                </div>
-                                <div class="col-sm-4 txt-cntr"><p><img src="~/Images/img/signature.png" alt="student-signarute" width="150px; height="100px;" /></p><p><strong>Signature of Principal</strong></p></div>
+                            <div class="col-sm-3 txt-cntr"></div>
+                            <div class="col-sm-12 uni-add">
+                                <h2>RNS INSTITUTE OF TECHNOLOGY BENGALURU - 576009</h2>
+                                <p>Address: NH - 79 Channasandra, RR Nagar, Karnataka-312901 <br>(www.rnsit.org)</p>
                             </div>
                         </div>
+                        <hr>
+                        <div class="row">
+                            
+                            <div class=" streamName  txt-cntr">
+                                <h3>Bachelor of Engineering (B.E)</h3>
+                                <h5>Grade Card<h5>
+                                <p>Examination Year: May - 19<p>
+                            </div>
+                            <div class="col-sm-4">
+                            </div>
+                        </div>
+                        <div class="row Studen_Detail">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col ">
+                                        <h5><span><strong>Name :</strong></span><strong> Sooraj</strong></h5>
+                                        <h5><strong>USN:</strong><strong> 1RN20CS299</strong></h5>
+                                        <h5><strong>Course:</strong><strong> Information Science and Engineering</strong></h5>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row" >
+                            <div class="container" >
+                                <div class="col-12">
+                                    <div class="table-div">
+                                        <table class="table table-bordered tablefirst">
+                                            <thead>
+                                                <tr>
+                                                    
+                                                    <th rowspan="2" style="vertical-align: middle;">90</th>
+                                                    <th colspan="3">Internals</th>
+                                                    <th rowspan="2" style="vertical-align: middle;">Total</th>
+                                                    <th rowspan="2" style="vertical-align: middle;">External</th>
+                                                    <th rowspan="2" style="vertical-align: middle;">Total</th>
+                                                    <th rowspan="2" colspan="3" style="vertical-align: middle;">Result</th>
+                                                </tr>
+                                                <tr>
+                                                    <th rowspan="1">Internal 1</th>
+                                                    <th rowspan="1">Internal 2</th>
+                                                    <th rowspan="1">Internal 3</th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th>abc</th>
+                                                    <td style="text-align:left;">50</td>
+                                                    <td>40</td>
+                                                    <td>60</td>
+                                                    <td>100</td>
+                                                    <td>20</td>
+                                                    <td>30</td>
+                                                    
+                                                    <td colspan="2">Pass</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>def</th>
+                                                    <td style="text-align:left;">80</td>
+                                                    <td>40</td>
+                                                    <td>60</td>
+                                                    <td>100</td>
+                                                    <td>20</td>
+                                                    <td>30</td>
+                                                   
+                                                    <td colspan="2">Pass</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>ghi</th>
+                                                    <td style="text-align:left;">90</td>
+                                                    <td>40</td>
+                                                    <td>60</td>
+                                                    <td>100</td>
+                                                    <td>20</td>
+                                                    <td>30</td>
+                                                    
+                                                    <td colspan="2">Pass</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>jkl</th>
+                                                    <td style="text-align:left;">88</td>
+                                                    <td>40</td>
+                                                    <td>60</td>
+                                                    <td>100</td>
+                                                    <td>20</td>
+                                                    <td>30</td>
+                                                    
+                                                    <td colspan="2">Pass</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>mno</th>
+                                                    <td style="text-align:left;">35</td>
+                                                    <td>40</td>
+                                                    <td>60</td>
+                                                    <td>100</td>
+                                                    <td>20</td>
+                                                    <td>30</td>
+                                                    
+                                                    <td colspan="2">Pass</td>
+                                                </tr>
+                                                <tr>
+                                                    <th colspan="7" style="text-align: right;">Percentage</th>
+                                                    <td colspan="2">89%</td>  
+                                                </tr>
+                                            </tbody>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-sm-4 txt-cntr">
+                                <p style="height:40px;"></p>
+                                <p><strong>Date of Issue :</strong><strong> 11 June 2019</strong></p>
+                            </div>
+                            <div class="col-sm-4 txt-cntr">
+                                <p style="height:40px;"></p>
+                                <p><strong>University Stamp </strong></p>
+                            </div>
+                            <div class="col-sm-4 txt-cntr"><p><img src="~/Images/img/signature.png" alt="student-signarute" width="150px; height="100px;" /></p><p><strong>Signature of Principal</strong></p></div>
+                        </div>
+
+
                     </div>
                 </div>
             </div>
-            
-        }
-        
 
-  </section>
+
+        </div>
+
+
+
+        </div>
+        </div>
+        </div>
+        </div>
+
+
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
-
-    <script>
-            function printPage() {
-              
-            window.print();
-        }
-            function printPage() {
-            var printContent = document.getElementById('external').innerHTML;
-            var originalContent = document.body.innerHTML;
-
-            document.body.innerHTML = printContent;
-            document.getElementById('print-btn').style.display = 'none';
-            window.print();
-            document.body.innerHTML = originalContent;
-        }
-    </script>
 </body>
 </html>
+
+<style>
+    .tablefirst, .tablesecond {
+        text-align: center;
+    }
+
+    .marksheet-box {
+        background-image: url(http://peoplehelp.in/mewaruni/images/marksheet-bg.png);
+        border: 2px solid #000;
+        padding: 15px;
+        margin-top: 20px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
+    }
+
+    .uni-logo, .uni-add, .txt-cntr {
+        text-align: center;
+    }
+
+        .uni-add p {
+            width:;
+            margin: 10px auto;
+        }
+
+    .Studen_Detail {
+        margin: 20px 0;
+    }
+
+        .Studen_Detail p {
+            margin-bottom: 0px;
+        }
+
+    hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.32);
+    }
+
+    * {
+        border-color: #00000075 !important;
+    }
+
+    .table-div thead th {
+        border-bottom: 0px !important;
+    }
+</style>
