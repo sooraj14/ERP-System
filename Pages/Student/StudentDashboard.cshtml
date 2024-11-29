@@ -8,14 +8,14 @@
 @{
     foreach (var st in Model.user)
     {
-        <div class="card mb-3" style="max-width: 900px; margin: 10rem auto; border-radius: 10px; overflow: hidden; margin-left:12rem;">
-            <div class="row g-0">
+        <div class="card mb-3" style="max-width: 900px; margin: 10rem auto; border-radius: 15px; overflow: hidden; box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);">
+            <div class="row g-0" >
                 <div class="col-md-4">
-                    <img src="~/Images/img/card.jpg" class="img-fluid" style="height: 100%; object-fit: cover;" alt="User image">
+                    <img src="~/Images/img/card.jpg" class="img-fluid" style="height: 100%; object-fit: cover; border-radius: 15px 0 0 15px;" alt="User image">
                 </div>
                 <div class="col-md-8">
-                    <div class="card-body">
-                        
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-center mb-3">Student Details</h5>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><b>USN:</b> @st.reg_number</li>
                             <li class="list-group-item"><b>NAME:</b> @st.name</li>
@@ -23,16 +23,64 @@
                             <li class="list-group-item"><b>SEMESTER:</b> @st.sem</li>
                             <li class="list-group-item"><b>CONTACT:</b> @st.contact</li>
                         </ul>
-                        <div class="mt-3">
-                            <a href="#" class="card-link">Card link</a>
-                            <a href="#" class="card-link">Another link</a>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
     }
 }
+<style>
+    .card {
+    max-width: 900px;
+    margin: 10rem auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    background-color: #f7f7f7; /* Light grey background for the card body */
+    padding: 2rem; /* Increased padding for a more spacious look */
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.list-group-item {
+    background-color: #fff; /* White background for each list item */
+    border: none;
+    padding: 1.5rem;
+    font-size: 1rem;
+    color: #555;
+}
+
+.list-group-item b {
+    color: #007bff; /* Highlighted labels */
+}
+
+.card img {
+    border-radius: 15px 0 0 15px; /* Rounded corners for the image */
+    object-fit: cover;
+}
+
+
+    
+    .card img {
+        border-radius: 10px;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+}
+
+</style>
 
 
 
