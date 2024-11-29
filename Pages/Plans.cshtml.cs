@@ -5,28 +5,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ERP_System.Pages
 {
-    public class IndexModel : PageModel
+    public class PlansModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
-
         private readonly ApplicationDbContext _context;
-        public IndexModel(ApplicationDbContext context)
+        public PlansModel(ApplicationDbContext context)
         {
             _context = context;
         }
         [BindProperty]
-        public logincollge login {  get; set; }
-        
+        public logincollge login { get; set; }
 
         public void OnGet()
         {
-        }
-
-        public IActionResult OnPost()
-        {
-            var collegeadmin = _context.collegeadmins.FirstOrDefault(c=>c.college_email==login.email && c.college_pass==login.password);
-             HttpContext.Session.SetInt32("clge_admin", collegeadmin.college_id);
-            return RedirectToPage("Plans");
         }
         public IActionResult OnPostBasic()
         {
@@ -35,7 +25,7 @@ namespace ERP_System.Pages
             details.subscription = "Basic Plan";
 
             _context.SaveChanges();
-            return RedirectToPage("Index");
+            return RedirectToPage("Index1");
         }
         public IActionResult OnPostStandard()
         {
@@ -44,7 +34,7 @@ namespace ERP_System.Pages
             details.subscription = "Standard Plan";
 
             _context.SaveChanges();
-            return RedirectToPage("Index");
+            return RedirectToPage("Index1");
         }
 
         public IActionResult OnPostPremium()
@@ -54,8 +44,7 @@ namespace ERP_System.Pages
             details.subscription = "Premium Plan";
 
             _context.SaveChanges();
-            return RedirectToPage("Index");
+            return RedirectToPage("Index1");
         }
-
     }
 }

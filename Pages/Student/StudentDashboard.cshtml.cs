@@ -7,7 +7,7 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace ERP_System.Pages.Student
 {
-    public class StudentDashboardModel : PageModel
+    public class StudentDashboardModel : PageModel  
     {
         private readonly ApplicationDbContext _context;
         public StudentDashboardModel(ApplicationDbContext context)
