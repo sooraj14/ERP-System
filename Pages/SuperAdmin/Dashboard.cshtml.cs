@@ -13,10 +13,34 @@ namespace ERP_System.Pages.SuperAdmin
             _context = context;
         }
         public int count { get; set; }
+        public List<CollegeAdmin> client { get; set; }
+
+
         public void OnGet()
         {
-           count = _context.collegeadmins.Count();
-            
+            count = _context.collegeadmins.Count();
+            client = _context.collegeadmins.ToList();
         }
+        public IActionResult OnPostBlock(int id)
+        {
+            var user = _context.collegeadmins.Find(id);
+            if (user != null)
+            {
+                user.Active = false;
+                _context.SaveChanges();
+            }
+            return RedirectToPage();
+        }
+        public IActionResult OnPostUnblock(int id)
+        {
+            var user = _context.collegeadmins.Find(id);
+            if (user != null)
+            {
+                user.Active = true;
+                _context.SaveChanges();
+            }
+            return RedirectToPage();
+        }
+       
     }
 }
