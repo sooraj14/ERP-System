@@ -36,7 +36,7 @@
                     <div class="col-md-6 mx-auto">
                         <label asp-for="AttendanceData.SelectedSubjectId" class="form-label">Select Subject</label>
                         <select id="SelectedSubjectId" class="form-select" asp-for="AttendanceData.SelectedSubjectId" required>
-                            <option value="">-- Select a Subject --</option>
+                            <option value="">Select a Subject</option>
                             @foreach (var subject in Model.AttendanceData.AssignedSubjects)
                             {
                                 <option value="@subject.sub_id">
@@ -52,7 +52,6 @@
                 </div>
             </form>
 
-            <!-- Attendance Table -->
             @if (Model.AttendanceData.Students != null && Model.AttendanceData.Students.Any())
             {
                 <form method="post" asp-page-handler="MarkAttendance">
