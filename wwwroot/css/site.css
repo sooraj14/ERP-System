@@ -21,3 +21,218 @@ body {
   margin-bottom: 60px;
 }
 
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+    .image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+/* Animated text */
+.animated-text {
+    position: absolute;
+    top: 50%;
+    left: -100%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    color: white;
+    white-space: nowrap;
+    animation: slideIn 3s forwards;
+   
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+/* Login form container styles */
+/* Center the form and make it visually appealing */
+.login-form-container {
+    position: absolute;
+    top: 50%;
+    right:0%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    width: 320px;
+}
+
+/* Form Headings */
+.login-form h2 {
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Input Fields */
+.login-form input[type="email"],
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Form Labels */
+.login-form label {
+    font-size: 14px;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+/* Green Button */
+button {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #28a745; /* Green */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    /* Button Hover Effect */
+    button:hover {
+        background-color: #218838;
+    }
+
+    /* Optional: Add a slight animation */
+    button:active {
+        transform: scale(0.98);
+    }
+
+
+/* Animation for sliding text */
+@keyframes slideIn {
+    0% {
+        left: -100%;
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        left: 10%;
+    }
+}
+
+/* Ensure the image container is full width and height */
+.image-container {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Full screen height */
+    background-image: url('~/Images/img/frontpage.jpg'); /* Replace with your actual image path */
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+/* Subscription container using flexbox */
+.subscription-container {
+    display: flex;
+    justify-content: center; /* Center the subscription packs horizontally */
+    align-items: center; /* Center the subscription packs vertically */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Place this layer on top of the background image */
+}
+
+/* Style for each subscription pack */
+.subscription-pack {
+    background: rgba(0, 0, 0, 0.6); /* Transparent black background */
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 30%;
+    margin: 0 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+    /* Featured subscription pack with an additional style */
+   
+
+/* Subscribe button styling */
+.subscribe-btn {
+   
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+/* Hover effect for the subscription packs */
+.subscription-pack:hover {
+    transform: translateY(-10px); /* Slightly lift the pack on hover */
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+    .subscription-pack {
+        width: 80%; /* Make subscription packs wider on smaller screens */
+        margin: 10px 0;
+    }
+}
+
+.subscription-quote {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 10rem;
+    color: #fff;
+    font-weight: bold;
+    opacity: 0; /* Initially hidden */
+    transform: translateY(30px); /* Start below */
+    animation: fadeInUp 1.5s forwards; /* Apply fadeInUp animation */
+    animation-delay: 0.5s; /* Delay the animation slightly */
+}
+
+/* Define the fadeInUp animation */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
