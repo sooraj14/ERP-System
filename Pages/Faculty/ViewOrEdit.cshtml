@@ -4,3 +4,116 @@
     Layout = "~/Pages/Faculty/_FacultyLayout.cshtml";
     ViewData["Title"] = "View or Edit Marks";
 }
+<head>
+    <link rel="stylesheet" href="~/css/site1.css" />
+
+</head>
+
+<div class="container py-4">
+    <h2>View or Edit Student Marks</h2>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <form method="post" asp-page-handler="LoadMarks">
+        <div class="mb-3">
+            <label for="SelectedSubjectId" class="form-label">Subject</label>
+            <select id="SelectedSubjectId" class="form-select" asp-for="ViewMarks.SelectedSubjectId" required>
+                <option value="">Choose a Subject</option>
+                @foreach (var subject in Model.ViewMarks.AssignedSubjects)
+                {
+                    <option value="@subject.sub_id">@subject.sub_name (Sem @subject.sem_id)</option>
+                }
+            </select>
+            <span asp-validation-for="ViewMarks.SelectedSubjectId" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="ExamType" class="form-label">Exam Type</label>
+            <select id="ExamType" class="form-select" asp-for="ViewMarks.ExamType" required>
+                <option value="">Select Exam Type</option>
+                <option value="Internal">Internal Assessment</option>
+                <option value="Final">Final Examination</option>
+            </select>
+            <span asp-validation-for="ViewMarks.ExamType" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3" id="internal-number-div" style="display:none;">
+            <label for="InternalNumber" class="form-label">Internal Assessment Number</label>
+            <select id="InternalNumber" class="form-select" asp-for="ViewMarks.InternalNumber">
+                <option value="">Select Internal Assessment</option>
+                <option value="1">First Assessment</option>
+                <option value="2">Second Assessment</option>
+                <option value="3">Third Assessment</option>
+            </select>
+            <span asp-validation-for="ViewMarks.InternalNumber" class="text-danger small"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Load Marks</button>
+    </form>
+
+    @if (Model.ViewMarks.StudentMarks.Any())
+    {
+        <form method="post" asp-page-handler="UpdateMarks" class="mt-4">
+            <input type="hidden" asp-for="ViewMarks.SelectedSubjectId" />
+            <input type="hidden" asp-for="ViewMarks.ExamType" />
+            <input type="hidden" asp-for="ViewMarks.InternalNumber" />
+
+            <h3>Student Marks</h3>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Registration No.</th>
+                        <th>Student Name</th>
+                        <th>Marks Obtained</th>
+                        <th>Max Marks</th>
+                        <th>Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.ViewMarks.StudentMarks.Count; i++)
+                    {
+                        <tr>
+                            <input type="hidden" asp-for="ViewMarks.StudentMarks[i].student_id" />
+                            <input type="hidden" asp-for="ViewMarks.StudentMarks[i].MarksId" />
+                            <input type="hidden" asp-for="ViewMarks.StudentMarks[i].MaxMarks" />
+                            <td>@Model.ViewMarks.StudentMarks[i].reg_num</td>
+                            <td>@Model.ViewMarks.StudentMarks[i].student_name</td>
+                            <td>
+                                <input type="number" class="form-control"
+                                       asp-for="ViewMarks.StudentMarks[i].ScoredMarks"
+                                       min="0" max="@Model.ViewMarks.StudentMarks[i].MaxMarks" required />
+                                <span asp-validation-for="ViewMarks.StudentMarks[i].ScoredMarks" class="text-danger"></span>
+                            </td>
+                            <td>@Model.ViewMarks.StudentMarks[i].MaxMarks</td>
+                            <td>
+                                <span class="badge @(Model.ViewMarks.StudentMarks[i].Percentage >= 50 ? "bg-success" : "bg-danger")">
+                                    @Model.ViewMarks.StudentMarks[i].Percentage%
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <button type="submit" class="btn btn-success mt-3">Update Marks</button>
+        </form>
+    }
+    @section Scripts {
+        <script>
+            document.getElementById('ExamType').addEventListener('change', function () {
+                var internalNumberDiv = document.getElementById('internal-number-div');
+                internalNumberDiv.style.display = this.value === 'Internal' ? 'block' : 'none';
+            });
+        </script>
+    }
