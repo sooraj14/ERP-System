@@ -97,14 +97,14 @@
 <body>
     <div class="" id="dropdown" style="margin-left:10rem;">
         <div class="col-md-4" data-value="internal-marks">
-            <div class="card text-white  mb-3" >
+            <div class="card text-white  mb-3" style="box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);">
                 <div class="card-body" >
                     <h5 class="card-title" style="color:black;">Internals</h5>
                 </div>
             </div>
         </div>
         <div class="col-md-4" data-value="external-marks">
-            <div class="card text-white  mb-3" >
+            <div class="card text-white  mb-3" style="box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);">
                 <div class="card-body">
                     <h5 class="card-title" style="color:black;">Final</h5>
                    
@@ -126,8 +126,8 @@
             <div class="container">
                 <div class="col-12">
                     <div class="table-div">
-                        <table class="table table-bordered tablefirst">
-                            <thead>
+                            <table class="table table-hover">
+                                <thead class="table-primary">
                                 <tr>
                                     <th  style="vertical-align: middle;">Subjects</th>
                                     @foreach (var type in Model.marks.Select(m => m.internal_type).Distinct())
@@ -237,7 +237,7 @@
 
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody >
                                                     @foreach(var subject in @Model.marks.GroupBy(m=>m.subject_name))
                                                     {
                                                         <tr>
@@ -290,7 +290,7 @@
                             <div class="row">
                                 <div class="col-sm-4 txt-cntr">
                                     <p style="height:40px;"></p>
-                                    <p><strong>Date of Issue :</strong><strong> 11 June 2019</strong></p>
+                                    <p><strong>Date of Issue :</strong><strong>@DateTime.Now.ToString("yyyy-MM-dd")</strong></p>
                                 </div>
                                 <div class="col-sm-4 txt-cntr">
                                     <p style="height:40px;"></p>
@@ -304,7 +304,7 @@
             </div>
             
         }
-        
+            
 
   </section>
         <!-- Optional JavaScript -->
@@ -317,6 +317,9 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
 
+
+    
+
     <script>
             function printPage() {
               
@@ -325,12 +328,17 @@
             function printPage() {
             var printContent = document.getElementById('external').innerHTML;
             var originalContent = document.body.innerHTML;
+            
+                document.body.innerHTML = printContent;
+                document.getElementById('print-btn').style.display = 'none';
+                window.print();
+                document.body.innerHTML = originalContent;
 
-            document.body.innerHTML = printContent;
-            document.getElementById('print-btn').style.display = 'none';
-            window.print();
-            document.body.innerHTML = originalContent;
-        }
+
+            }
+      
+
+
     </script>
 </body>
 </html>

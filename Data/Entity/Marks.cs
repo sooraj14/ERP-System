@@ -6,6 +6,7 @@ namespace ERP_System.Data.Entity
     {
         [Key]
         public int marks_id { get; set; }
+        public int student_id { get; set; }
         public int college_id { get; set; }
         public int stream_id { get; set; }
         public int sem_id { get; set; }
