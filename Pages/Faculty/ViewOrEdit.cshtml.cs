@@ -51,7 +51,6 @@ namespace ERP_System.Pages.Faculty
                 {
                     if (ViewMarks.ExamType == "Internal")
                     {
-                        // Validate internal number for internal exams
                         if (!ViewMarks.InternalNumber.HasValue)
                         {
                             TempData["ErrorMessage"] = "Please select an internal assessment number.";
@@ -116,7 +115,6 @@ namespace ERP_System.Pages.Faculty
                 return RedirectToPage("/Faculty/loginfaculty");
             }
 
-            // Remove ModelState validation for the entire model
             ModelState.Clear();
 
             var subject = _context.subjects.FirstOrDefault(s =>
@@ -129,7 +127,6 @@ namespace ERP_System.Pages.Faculty
                 return Page();
             }
 
-            // Validate each student's marks individually
             bool hasValidationErrors = false;
             foreach (var mark in ViewMarks.StudentMarks)
             {
@@ -164,10 +161,8 @@ namespace ERP_System.Pages.Faculty
             }
             else if (ViewMarks.ExamType == "Final")
             {
-                // Updated implementation for Final marks
                 foreach (var mark in ViewMarks.StudentMarks)
                 {
-                    // Create a new Marks record for each student if not exists
                     var existingMark = _context.marks.FirstOrDefault(m =>
                         m.sub_id == ViewMarks.SelectedSubjectId &&
                         m.stream_id == subject.stream_id &&
@@ -180,7 +175,6 @@ namespace ERP_System.Pages.Faculty
                     }
                     else
                     {
-                        // If no existing mark, create a new one
                         var newMark = new Marks
                         {
                             sub_id = ViewMarks.SelectedSubjectId,

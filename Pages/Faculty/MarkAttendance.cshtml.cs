@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ERP_System.Data.Entity;
@@ -17,7 +16,6 @@ namespace ERP_System.Pages.Faculty
             _context = context;
         }
 
-       
         public AttendanceModel AttendanceData { get; set; } = new();
 
         public IActionResult OnGet()
@@ -27,7 +25,7 @@ namespace ERP_System.Pages.Faculty
             {
                 return RedirectToPage("/Faculty/loginfaculty");
             }
-            
+
             LoadAssignedSubjects(facultyId.Value);
             return Page();
         }
@@ -46,14 +44,15 @@ namespace ERP_System.Pages.Faculty
 
             if (attendanceData.SelectedSubjectId > 0)
             {
-                var subject = _context.subjects
-                    .FirstOrDefault(s => s.sub_id == attendanceData.SelectedSubjectId && s.fac_id == facultyId);
+                var facultySubject = _context.facultysubjects
+                    .FirstOrDefault(fs => fs.sub_id == attendanceData.SelectedSubjectId
+                                          && fs.fac_id == facultyId);
 
-                if (subject != null)
+                if (facultySubject != null)
                 {
                     var students = _context.studentdetails
-                        .Where(s => s.stream_id == subject.stream_id
-                               && s.sem_id == subject.sem_id
+                        .Where(s => s.stream_id == facultySubject.stream_id
+                               && s.sem_id == facultySubject.sem_id
                                && s.is_active)
                         .OrderBy(s => s.student_name)
                         .ToList();
@@ -83,10 +82,11 @@ namespace ERP_System.Pages.Faculty
                 return Page();
             }
 
-            var subject = _context.subjects
-                .FirstOrDefault(s => s.sub_id == attendanceData.SelectedSubjectId);
+            var facultySubject = _context.facultysubjects
+                .FirstOrDefault(fs => fs.sub_id == attendanceData.SelectedSubjectId
+                                      && fs.fac_id == facultyId);
 
-            if (subject == null)
+            if (facultySubject == null)
             {
                 TempData["ErrorMessage"] = "Selected subject not found.";
                 LoadAssignedSubjects(facultyId.Value);
@@ -105,8 +105,8 @@ namespace ERP_System.Pages.Faculty
             }
 
             var eligibleStudents = _context.studentdetails
-                .Where(s => s.stream_id == subject.stream_id
-                       && s.sem_id == subject.sem_id
+                .Where(s => s.stream_id == facultySubject.stream_id
+                       && s.sem_id == facultySubject.sem_id
                        && s.is_active)
                 .Select(s => s.student_id)
                 .ToList();
@@ -114,8 +114,8 @@ namespace ERP_System.Pages.Faculty
             var attendanceRecords = eligibleStudents.Select(studentId => new Attendence
             {
                 student_id = studentId,
-                college_id = subject.college_id,
-                stream_id = subject.stream_id,
+                college_id = facultySubject.college_id,
+                stream_id = facultySubject.stream_id,
                 sub_id = attendanceData.SelectedSubjectId,
                 date = attendanceData.AttendanceDate,
                 time = attendanceData.AttendanceTime,

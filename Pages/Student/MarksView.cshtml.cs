@@ -23,19 +23,18 @@ namespace ERP_System.Pages.Student
                 return Page();
             }
             Newuser = (from s in _context.studentdetails
-                    join st in _context.streamdetails 
-                    on s.stream_id equals st.stream_id
-                   join c in _context.collegeadmins on s.college_id equals c.college_id
-                    where s.student_id == id
-                    select new Marksheet
-                    {
-                        reg_number = s.reg_num,
-                        stuname = s.student_name,
-                        semester = s.sem_id,
-                        branchname = st.stream_name,
-                        college_name = c.college_name
-                    }).ToList();
-             marks = (from s in _context.subjects
+                       join st in _context.streamdetails on s.stream_id equals st.stream_id
+                       join c in _context.collegeadmins on s.college_id equals c.college_id
+                       where s.student_id == id
+                       select new Marksheet
+                       {
+                           reg_number = s.reg_num,
+                           stuname = s.student_name,
+                           semester = s.sem_id,
+                           branchname = st.stream_name,
+                           college_name = c.college_name
+                       }).ToList();
+            marks = (from s in _context.subjects
                          join i in _context.internals on s.sub_id equals i.sub_id into internalsGroup
                          from i in internalsGroup.DefaultIfEmpty() // Left join with internals
                          join m in _context.marks on s.sub_id equals m.sub_id into marksGroup
