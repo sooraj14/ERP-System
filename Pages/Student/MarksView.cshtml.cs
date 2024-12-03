@@ -23,6 +23,7 @@ namespace ERP_System.Pages.Student
                 return Page();
             }
             Newuser = (from s in _context.studentdetails
+
                     join st in _context.streamdetails 
                     on s.stream_id equals st.stream_id
                    join c in _context.collegeadmins on s.college_id equals c.college_id
@@ -47,6 +48,9 @@ namespace ERP_System.Pages.Student
                               subject_name = s.sub_name,
                               student_id = m.student_id
                           }).ToList();
+
+                       
+
 
             return Page();
         }
