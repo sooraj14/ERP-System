@@ -42,6 +42,18 @@
 
                 
             </form>
+
+            <div class="mt-2">
+                @{
+
+
+                    if (TempData["loginfailed"] == "college Blocked")
+                    {
+                        <p class="text-center text-danger">Login Blocked</p>
+                    }
+
+                }
+            </div>
         </div>
     </div>
     

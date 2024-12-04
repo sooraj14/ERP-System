@@ -22,29 +22,33 @@ namespace ERP_System.Pages
         {
             int? id = HttpContext.Session.GetInt32("clge_admin");
             var details = _context.collegeadmins.Where(cd => cd.college_id == (int)id).FirstOrDefault();
-            details.subscription = "Basic Plan";
+            details.subscription = "Basic only";
 
             _context.SaveChanges();
-            return RedirectToPage("Index1");
+            return RedirectToPage("/Index");
+
         }
         public IActionResult OnPostStandard()
         {
             int? id = HttpContext.Session.GetInt32("clge_admin");
             var details = _context.collegeadmins.Where(cd => cd.college_id == (int)id).FirstOrDefault();
-            details.subscription = "Standard Plan";
+            details.subscription = "Standard Only";
 
             _context.SaveChanges();
-            return RedirectToPage("Index1");
+            return RedirectToPage("/Index");
         }
 
         public IActionResult OnPostPremium()
         {
             int? id = HttpContext.Session.GetInt32("clge_admin");
             var details = _context.collegeadmins.Where(cd => cd.college_id == (int)id).FirstOrDefault();
-            details.subscription = "Premium Plan";
+            details.subscription = "Advanced Only";
 
             _context.SaveChanges();
-            return RedirectToPage("Index1");
+
+            return RedirectToPage("/Index");
+
+
         }
     }
 }

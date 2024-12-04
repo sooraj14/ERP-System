@@ -20,5 +20,7 @@ namespace ERP_System.Data.context
         public DbSet<InternalExam> internals { get; set; }
         public DbSet<Semester> semesters { get; set; }
 
+        public DbSet<Notice>    notices { get; set; }
+
     }
 }
