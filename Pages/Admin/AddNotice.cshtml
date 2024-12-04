@@ -1,0 +1,32 @@
+﻿@page
+@model ERP_System.Pages.Admin.AddNoticeModel
+@{
+    Layout = "_AdminLayout";
+}
+
+<div  style="box-shadow: 2px 2px 20px black; margin-top:100px; margin-left:300px; width:540px; height:450px; gap:5px;" class="border border-dark p-3">
+    <form method="post">
+
+        <div>
+
+    <textarea style="width:500px; height:300px;" asp-for="an.notice_Data" class="form-control fw-bold" placeholder="Enter Notice"></textarea>
+
+        </div>
+                     
+        <div>
+            @{
+                <select asp-for="an.stream_id" class="my-2">
+                    <option value="" disabled selected>Select Branch</option>
+                    @foreach (var sd in Model.stream)
+                    {
+                        <option  value="@sd.stream_id">@sd.stream_name</option>
+                    }
+                </select>
+                
+              }
+        </div>
+        <div>
+            <button type="submit" style="width:200px; margin-left:130px;">Submit</button>
+        </div>
+    </form>
+</div>

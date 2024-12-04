@@ -19,6 +19,41 @@ namespace ERP_System
                 options.UseSqlServer(connectionString);
             });
 
+
+           
+
+
+
+
+
+
+
+
+
+            builder.Services.AddAuthentication("MyCookieAuth")
+    .AddCookie("MyCookieAuth", options =>
+    {
+        options.Cookie.Name = "MyAppCookie";
+        options.LoginPath = "/Index";
+        options.LogoutPath = "/Admin/Adminlogout";
+        options.ExpireTimeSpan = TimeSpan.FromHours(8);
+        options.SlidingExpiration = true;
+        options.AccessDeniedPath = "/Plans";
+    });
+
+
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Basic Only", policy =>
+                    policy.RequireClaim("Subscription", "Basic Only"));
+
+                options.AddPolicy("Standard Only", policy =>
+                    policy.RequireClaim("Subscription", "Standard Only"));
+
+                options.AddPolicy("Advanced Only", policy =>
+                    policy.RequireClaim("Subscription", "Advanced Only"));
+            });
+
             builder.Services.AddSession(options =>
             {
                 options.Cookie.HttpOnly = true; // Secure cookie
@@ -40,7 +75,12 @@ namespace ERP_System
             app.UseStaticFiles();
             app.UseSession();
             app.UseRouting();
+
  
+  
+            
+            app.UseAuthentication(); // Add authentication middleware
+
             app.UseAuthorization();
 
             app.MapRazorPages();
