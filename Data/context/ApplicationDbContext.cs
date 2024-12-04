@@ -19,6 +19,6 @@ namespace ERP_System.Data.context
         public DbSet<Marks> marks { get; set; }
         public DbSet<InternalExam> internals { get; set; }
         public DbSet<Semester> semesters { get; set; }
-
+        public DbSet<Features> features { get; set; }
     }
 }

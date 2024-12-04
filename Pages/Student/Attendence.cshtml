@@ -63,17 +63,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var attendance in at.AttendanceDetails)
-                                {
-                                    @if (attendance.Active == true)
+                                
+                              
+                                    @if (at.is_active == true)
                                     {
                                         <tr>
-                                            <td>@attendance.date</td>
+                                            <td>@at.date</td>
                                             <td>P</td>
                                             
                                         </tr>
                                     }   
-                                } 
+                           
                             </tbody>
                         </table>
                     </div>
@@ -86,16 +86,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                    @foreach (var attendance in at.AttendanceDetails)
-                                    {
-                                        @if (attendance.Active == false)
+                                  
+                                        @if (at.is_active == false)
                                         {
                                         <tr>
-                                            <td>@attendance.date</td>
+                                            <td>@at.date</td>
                                             <td>A</td>
                                         </tr>
                                         }
-                                    }
+                                  
                             </tbody>
                         </table>
                     </div>

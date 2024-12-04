@@ -38,7 +38,7 @@ namespace ERP_System.Pages.Student
                  marks = (from s in _context.subjects
                           join i in _context.internals on s.sub_id equals i.sub_id
                           join m in _context.marks on s.sub_id equals m.sub_id
-                          where i.student_id == id && m.student_id == id  // Filter by student_id
+                          where i.student_id == id && m.student_id == id 
                           select new Internalsheet
                           {
                               internal_type = i.exm_type,

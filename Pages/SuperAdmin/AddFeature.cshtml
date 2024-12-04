@@ -1,0 +1,33 @@
+﻿@page
+@model ERP_System.Pages.SuperAdmin.AddFeatureModel
+@{
+}
+<div>
+    <form  method="post">
+    <div>
+    <label class="form-control">Feauture Name</label>
+    <input type=" text" class="form-control" asp-for="dynamicfeature.fea_name" />
+    </div>
+    <div>
+        <label class="form-control">Path</label>
+        <input type=" text" class="form-control" asp-for="dynamicfeature.path" />
+    </div>
+    <div>
+        <label class="form-control">Plan Type</label>
+        <input type=" text" class="form-control" asp-for="dynamicfeature.plan_type"/>
+    </div>
+
+    <div>
+        <label class="form-control">Role</label>
+        <input type=" text" class="form-control" asp-for="dynamicfeature.role"/>
+    </div>
+
+    <div>
+        <label asp-for="dynamicfeature.active" class="form-control">IsActive</label>
+        <input type=" text" class="form-control" asp-for="dynamicfeature.active" />
+    </div>
+    <div>
+    <button type="submit" >Update</button>
+        </div>
+    </form>
+</div>
