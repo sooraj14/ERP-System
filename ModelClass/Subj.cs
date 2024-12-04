@@ -10,7 +10,8 @@ namespace ERP_System.ModelClass
         public int fac_id { get; set; }
         public int college_id { get; set; }
         public string sub_name { get; set; }
+        public DateOnly date {  get; set; }
         public bool is_active { get; set; }
-        public List<Attendence> AttendanceDetails { get; set; } = new List<Attendence>();
+       
     }
 }

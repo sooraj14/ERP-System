@@ -10,6 +10,7 @@ namespace ERP_System.Data.Entity
         public int college_id { get; set; }
         public int stream_id { get; set; }
         public int sub_id { get; set; }
+        public int sem_id { get; set; }
         public DateOnly date {  get; set; }
         public TimeOnly time { get; set; }
 

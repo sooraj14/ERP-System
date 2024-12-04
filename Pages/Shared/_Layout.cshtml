@@ -19,7 +19,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" style="z-index:1000;">
-                    <ul class="navbar-nav flex-grow-1">
+                    @* <ul class="navbar-nav flex-grow-1">
                         
                         <li class="nav-item">
                             <a class="nav-link text-danger fw-bold " asp-area="" asp-page="/SuperAdmin/superadmin">SuperAdmin</a>
@@ -37,7 +37,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-danger fw-bold " asp-area="" asp-page="/Faculty/loginfaculty">Faculty</a>
                         </li>
-                    </ul>
+                    </ul> *@
+
+                    @await Component.InvokeAsync("Menu")
                 </div>
             </div>
         </nav>
