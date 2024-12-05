@@ -1,0 +1,11 @@
+﻿@model List<Data.Entity.Features>
+
+
+<ul class="navbar-nav flex-grow-1">
+    @foreach (var adm in Model)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-danger fw-bold " asp-area="" asp-page="@adm.path">@adm.fea_name</a>
+        </li>
+    }
+</ul>

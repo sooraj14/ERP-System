@@ -15,9 +15,13 @@ namespace ERP_System.Pages.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync ()
         {
-            var menulist = await _context.features.Where(f => f.active == true).ToListAsync();
+            var menulist = await _context.features.Where(f => f.role=="SuperAdmin").ToListAsync();
+
+            
 
             return View(menulist);
         }
+
+       
     }
 }

@@ -33,8 +33,10 @@
 
 
     $("#teacherselect").click(function () {
-                    if ($(this).val() === "add-teacher") {
-                $("#form-container-teacher").show();
+        if ($(this).val() === "add-teacher") {
+            Console.log("addteacher");
+            $("#form-container-teacher").show();
+           
                 $("#form-container-student").hide();
                 $("#view-students-container").hide();
                 $("#studentsinthisbranch").hide();

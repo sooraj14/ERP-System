@@ -189,43 +189,43 @@
             </div>
         </div>
 
-        <div class="nav flex-column mt-4">
-            <a class="nav-link active" asp-page="/Admin/AdminDashboard">
-                <i class="fas fa-home text-primary"></i>
-                <span>STUDENTS</span>
-            </a>
-            <a class="nav-link" asp-page="/Admin/Facultysubject">
-                <i class="fas fa-check-square text-success"></i>
-                <span>FACULTY-SUBJECT</span>
-            </a>
-            <a class="nav-link" asp-page="/Admin/Teacher">
-                <i class="fas fa-plus-circle text-info"></i>
-                <span>TEACHER</span>
-            </a>
-            <a class="nav-link" asp-page="/Admin/AccademicStructure">
-                <i class="fas fa-edit text-warning"></i>
-                <span>BRANCH</span>
-            </a>
+       @*  <div class="nav flex-column mt-4">
+             <a class="nav-link active" asp-page="/Admin/AdminDashboard">
+                 <i class="fas fa-home text-primary"></i>
+                 <span>STUDENTS</span>
+             </a>
+             <a class="nav-link" asp-page="/Admin/Facultysubject">
+                 <i class="fas fa-check-square text-success"></i>
+                 <span>FACULTY-SUBJECT</span>
+             </a>
+             <a class="nav-link" asp-page="/Admin/Teacher">
+                 <i class="fas fa-plus-circle text-info"></i>
+                 <span>TEACHER</span>
+             </a>
+             <a class="nav-link" asp-page="/Admin/AccademicStructure">
+                 <i class="fas fa-edit text-warning"></i>
+                 <span>BRANCH</span>
+             </a>
 
-            <a class="nav-link" asp-page="/Admin/Subject">
-                <i class="fas fa-edit text-warning"></i>
-                <span>SUBJECT</span>
-            </a>
+             <a class="nav-link" asp-page="/Admin/Subject">
+                 <i class="fas fa-edit text-warning"></i>
+                 <span>SUBJECT</span>
+             </a>
 
 
-            <a class="nav-link" asp-page="/Admin/AddNotice">
-                <i class="fas fa-edit text-warning"></i>
-                <span> Add Notice</span>
-            </a>
-        </div>
+             <a class="nav-link" asp-page="/Admin/AddNotice">
+                 <i class="fas fa-edit text-warning"></i>
+                 <span> Add Notice</span>
+             </a>
+         </div> *@
 
 
        
-                <a class="nav-link" asp-page="/Admin/TimeTable">
+              @*   <a class="nav-link" asp-page="/Admin/TimeTable">
                     <i class="fas fa-edit text-warning"></i>
                     <span> Add Time-Table</span>
-                </a>
-            
+                </a> *@
+        @await Component.InvokeAsync("AdminMenu")    
         
 
         <!-- Logout Section -->
@@ -235,7 +235,7 @@
                 <span>Logout</span>
             </a>
         </div>
-           Navbar -->
+        </nav>
     <nav class="top-navbar">
         <div class="system-name">ERP System</div>
         <div class="user-section">
@@ -250,10 +250,10 @@
     </div>
 
         <!-- Bootstrap JS -->
-    </nav>
+   
 
 
-    <!-- Top
+   
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.getElementById('sidebarToggle').addEventListener('click', function () {
