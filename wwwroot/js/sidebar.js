@@ -15,7 +15,7 @@
                 $("#teachersinthisbranch").hide();
             }
             else if (selectedValue === "view-students") {
-                console.log(selectedValue)
+                //console.log(selectedValue           
                 $("#view-students-container").show();
 
                 $(".selectbranchforstudents").show();
