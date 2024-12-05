@@ -19,6 +19,7 @@ namespace ERP_System.ModelClass
         public TimeOnly AttendanceTime { get; set; }
 
         public List<int> PresentStudentIds { get; set; } = new();
+        public List<TimeOnly> ExistingSessionTimes { get; set; } = new();
     }
 
     public class StudentAttendanceInfo : Studentinfo

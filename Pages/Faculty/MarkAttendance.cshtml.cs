@@ -16,6 +16,7 @@ namespace ERP_System.Pages.Faculty
             _context = context;
         }
 
+        [BindProperty]
         public AttendanceModel AttendanceData { get; set; } = new();
 
         public IActionResult OnGet()
@@ -27,13 +28,13 @@ namespace ERP_System.Pages.Faculty
             }
 
             LoadAssignedSubjects(facultyId.Value);
+            AttendanceData.AttendanceDate = DateOnly.FromDateTime(DateTime.Now);
+            AttendanceData.AttendanceTime = TimeOnly.FromDateTime(DateTime.Now);
             return Page();
         }
 
-        public IActionResult OnPostLoadStudents(AttendanceModel attendanceData)
+        public IActionResult OnPostLoadStudents()
         {
-            AttendanceData = attendanceData;
-
             var facultyId = HttpContext.Session.GetInt32("FacultyID");
             if (facultyId == null)
             {
@@ -42,14 +43,21 @@ namespace ERP_System.Pages.Faculty
 
             LoadAssignedSubjects(facultyId.Value);
 
-            if (attendanceData.SelectedSubjectId > 0)
+            if (AttendanceData.SelectedSubjectId > 0)
             {
                 var facultySubject = _context.facultysubjects
-                    .FirstOrDefault(fs => fs.sub_id == attendanceData.SelectedSubjectId
-                                          && fs.fac_id == facultyId);
+                    .FirstOrDefault(fs => fs.sub_id == AttendanceData.SelectedSubjectId && fs.fac_id == facultyId);
 
                 if (facultySubject != null)
                 {
+                    AttendanceData.ExistingSessionTimes = _context.attences
+                        .Where(a => a.sub_id == AttendanceData.SelectedSubjectId
+                                    && a.date == AttendanceData.AttendanceDate)
+                        .Select(a => a.time)
+                        .Distinct()
+                        .OrderBy(t => t)
+                        .ToList();
+
                     var students = _context.studentdetails
                         .Where(s => s.stream_id == facultySubject.stream_id
                                && s.sem_id == facultySubject.sem_id
@@ -57,7 +65,7 @@ namespace ERP_System.Pages.Faculty
                         .OrderBy(s => s.student_name)
                         .ToList();
 
-                    AttendanceData.Students = CalculateStudentAttendance(students, attendanceData.SelectedSubjectId);
+                    AttendanceData.Students = CalculateStudentAttendance(students, AttendanceData.SelectedSubjectId);
                     AttendanceData.ShowNoStudentsMessage = !AttendanceData.Students.Any();
                 }
             }
@@ -65,10 +73,8 @@ namespace ERP_System.Pages.Faculty
             return Page();
         }
 
-        public IActionResult OnPostMarkAttendance(AttendanceModel attendanceData)
+        public IActionResult OnPostMarkAttendance()
         {
-            AttendanceData = attendanceData;
-
             var facultyId = HttpContext.Session.GetInt32("FacultyID");
             if (facultyId == null)
             {
@@ -83,8 +89,7 @@ namespace ERP_System.Pages.Faculty
             }
 
             var facultySubject = _context.facultysubjects
-                .FirstOrDefault(fs => fs.sub_id == attendanceData.SelectedSubjectId
-                                      && fs.fac_id == facultyId);
+                .FirstOrDefault(fs => fs.sub_id == AttendanceData.SelectedSubjectId && fs.fac_id == facultyId);
 
             if (facultySubject == null)
             {
@@ -93,13 +98,16 @@ namespace ERP_System.Pages.Faculty
                 return Page();
             }
 
-            var existingAttendance = _context.attences
-                .Any(a => a.sub_id == attendanceData.SelectedSubjectId
-                       && a.date == attendanceData.AttendanceDate);
+            // Check if 2 sessions already exist for today
+            var existingSessions = _context.attences
+                .Where(a => a.sub_id == AttendanceData.SelectedSubjectId && a.date == AttendanceData.AttendanceDate)
+                .Select(a => a.time)
+                .Distinct()
+                .Count();
 
-            if (existingAttendance)
+            if (existingSessions >= 2)
             {
-                TempData["ErrorMessage"] = "Attendance for this subject and date already exists.";
+                TempData["ErrorMessage"] = "You can only mark a maximum of 2 attendance sessions per day.";
                 LoadAssignedSubjects(facultyId.Value);
                 return Page();
             }
@@ -116,17 +124,17 @@ namespace ERP_System.Pages.Faculty
                 student_id = studentId,
                 college_id = facultySubject.college_id,
                 stream_id = facultySubject.stream_id,
-                sub_id = attendanceData.SelectedSubjectId,
-                date = attendanceData.AttendanceDate,
-                time = attendanceData.AttendanceTime,
-                Active = attendanceData.PresentStudentIds.Contains(studentId)
+                sub_id = AttendanceData.SelectedSubjectId,
+                date = AttendanceData.AttendanceDate,
+                time = AttendanceData.AttendanceTime,
+                Active = AttendanceData.PresentStudentIds.Contains(studentId)
             }).ToList();
 
             _context.attences.AddRange(attendanceRecords);
             _context.SaveChanges();
 
             TempData["SuccessMessage"] = "Attendance marked successfully!";
-            return RedirectToPage("/Faculty/FacultyDashboard");
+            return RedirectToPage("/Faculty/MarkAttendance");
         }
 
         private void LoadAssignedSubjects(int facultyId)
@@ -146,24 +154,19 @@ namespace ERP_System.Pages.Faculty
 
         private List<StudentAttendanceInfo> CalculateStudentAttendance(List<Studentinfo> students, int subjectId)
         {
-            var studentAttendanceInfoList = new List<StudentAttendanceInfo>();
-
-            foreach (var student in students)
+            return students.Select(student =>
             {
                 var totalClasses = _context.attences
-                    .Count(a => a.sub_id == subjectId
-                             && a.student_id == student.student_id);
+                    .Count(a => a.sub_id == subjectId && a.student_id == student.student_id);
 
                 var attendedClasses = _context.attences
-                    .Count(a => a.sub_id == subjectId
-                             && a.student_id == student.student_id
-                             && a.Active);
+                    .Count(a => a.sub_id == subjectId && a.student_id == student.student_id && a.Active);
 
                 double attendancePercentage = totalClasses > 0
                     ? (double)attendedClasses / totalClasses * 100
                     : 0;
 
-                studentAttendanceInfoList.Add(new StudentAttendanceInfo
+                return new StudentAttendanceInfo
                 {
                     student_id = student.student_id,
                     student_name = student.student_name,
@@ -172,10 +175,8 @@ namespace ERP_System.Pages.Faculty
                     TotalClasses = totalClasses,
                     AttendedClasses = attendedClasses,
                     AttendancePercentage = Math.Round(attendancePercentage, 2)
-                });
-            }
-
-            return studentAttendanceInfoList;
+                };
+            }).ToList();
         }
     }
 }
