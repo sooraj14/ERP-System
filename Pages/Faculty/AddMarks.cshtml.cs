@@ -107,6 +107,7 @@ namespace ERP_System.Pages.Faculty
             {
                 var finalExamRecords = FacultyMarks.StudentMarks.Select(mark => new Marks
                 {
+                    student_id = mark.StudentId,
                     sub_id = FacultyMarks.SelectedSubjectId,
                     sem_marks = mark.ScoredMarks,
                     max_marks = FacultyMarks.MaxMarks,
