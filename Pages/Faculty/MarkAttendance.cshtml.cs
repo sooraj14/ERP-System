@@ -125,6 +125,7 @@ namespace ERP_System.Pages.Faculty
                 college_id = facultySubject.college_id,
                 stream_id = facultySubject.stream_id,
                 sub_id = AttendanceData.SelectedSubjectId,
+                sem_id = facultySubject.sem_id,
                 date = AttendanceData.AttendanceDate,
                 time = AttendanceData.AttendanceTime,
                 Active = AttendanceData.PresentStudentIds.Contains(studentId)

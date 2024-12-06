@@ -16,12 +16,12 @@ namespace ERP_System.Pages.Student
         }
 
         [BindProperty]
-        public List<Subj> sub{ get; set; } = new List<Subj>();
+        public List<Subj> sub { get; set; } = new List<Subj>();
 
         [BindProperty]
         //public List<attendence> attend { get; set; } = new List<attendence>();
         public double percentage { get; set; }
-        
+
         public IActionResult OnGet()
         {
 
