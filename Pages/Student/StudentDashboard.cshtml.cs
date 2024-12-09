@@ -16,9 +16,11 @@ namespace ERP_System.Pages.Student
         }
         [BindProperty]
         public List<StudentProfile> user { get; set; } = new List<StudentProfile>();
+        public List<Notice> Notices { get; set; } = new List<Notice>();
 
         //viewdata purpose
         public string sname { get; set; }
+        public string collegename { get; set; }
         public IActionResult OnGet()
         {
             int? id = HttpContext.Session.GetInt32("stud_id");
@@ -30,9 +32,17 @@ namespace ERP_System.Pages.Student
             var student = _context.studentdetails.FirstOrDefault(s=>s.student_id == id);
             if (student!=null)
             {
-                sname = student.student_name;
-                
+                sname = student.student_name;      
             }
+            var colname = _context.collegeadmins.FirstOrDefault(s=>s.college_id == student.college_id);
+            if (colname != null)
+            {
+                collegename = colname.college_name;
+            }
+            Notices = _context.notices
+                   .Where(n => n.college_id == student.college_id && n.stream_id == student.stream_id)
+                   .Take(5)
+                   .ToList();
 
             user = (from s in _context.studentdetails
                     join c in _context.streamdetails
@@ -47,6 +57,7 @@ namespace ERP_System.Pages.Student
                         contact = s.contact_no
 
                     }).ToList();
+       
            
             return Page();
         }
