@@ -98,7 +98,6 @@ namespace ERP_System.Pages.Faculty
                 return Page();
             }
 
-            // Check if 2 sessions already exist for today
             var existingSessions = _context.attences
                 .Where(a => a.sub_id == AttendanceData.SelectedSubjectId && a.date == AttendanceData.AttendanceDate)
                 .Select(a => a.time)
