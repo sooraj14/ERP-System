@@ -2,7 +2,50 @@
 @model ERP_System.Pages.Student.StudentDashboardModel
 @{
     ViewData["sname"] = Model.sname;
+    ViewData["collegename"] = Model.collegename;
 }
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <img style="width:20px;height:20px;" src="~/Images/img/notification.png" /> Notification
+   
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Notice</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @if (Model.Notices.Any())
+                {
+                    <div class="list-group">
+                        @foreach (var notice in Model.Notices)
+                        {
+                            <div class="list-group-item list-group-item-action border-0 px-0">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <p class="mb-1">@notice.notice_Data</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center text-muted py-3">
+                        No recent notices
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @{
@@ -37,6 +80,7 @@
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+   
 }
 
 .card-body {

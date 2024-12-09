@@ -29,7 +29,7 @@
         left: var(--sidebar-width);
         right: 0;
         height: var(--top-nav-height);
-        background-color: #ffffff;
+        background-color: #011936;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         display: flex;
         align-items: center;
@@ -37,6 +37,7 @@
         padding: 0 20px;
         z-index: 1000;
         transition: left 0.3s;
+       
     }
 
     .sidebar {
@@ -45,7 +46,7 @@
         left: 0;
         height: 100vh;
         width: var(--sidebar-width);
-        background-color: var(--primary-bg-color);
+        background-color: #011936;
         transition: width 0.3s;
         overflow-x: hidden;
         z-index: 1020;
@@ -79,7 +80,7 @@
         text-align: center;
         padding: 20px;
         color: #ffffff;
-        background-color: var(--secondary-bg-color);
+        background-color: #011936;
         border-bottom: 1px solid rgba(255,255,255,0.1);
         position: relative;
     }
@@ -100,7 +101,7 @@
         .sidebar .nav-link:hover,
         .sidebar .nav-link.active {
             color: #ffffff;
-            background-color: rgba(255,255,255,0.1);
+            background-color: #011936;
         }
 
         .sidebar .nav-link i {
@@ -136,12 +137,20 @@
         }
 
     .content {
-        margin-left: var(--sidebar-width);
-        margin-top: var(--top-nav-height);
-        padding: 20px;
-        transition: margin-left 0.3s;
-        background-color: #f4f6f9;
+         margin-left: var(--sidebar-width);
+         margin-top: var(--top-nav-height);
+         padding: 20px;
+         transition: margin-left 0.3s;
+         background-color:#FFFCF9;
+         /* background-image: url("Images/img/card.jpg") !important;  */
+       
         min-height: calc(100vh - var(--top-nav-height));
+       
+        height: 300px;
+        
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
     }
 
     .top-navbar .system-name {
@@ -158,6 +167,7 @@
         .top-navbar .user-section .user-icon {
             margin-right: 10px;
             color: var(--primary-bg-color);
+           
         }
 
         .top-navbar .user-section .user-name {
@@ -215,7 +225,7 @@
 
    
     <nav class="top-navbar">
-        <div class="system-name">ERP System</div>
+        <div class="system-name" style="color:aliceblue;">@ViewData["collegename"]</div>
         <div class="user-section">
             <i class="fas fa-user-circle user-icon fa-2x"></i>
             <span class="user-name">@ViewData["FacultyName"]</span>
@@ -227,7 +237,7 @@
 
 
     <div class="content">
-        @RenderBody()
+      @RenderBody()
     </div>
     @RenderSection("Scripts",false)
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

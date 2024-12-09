@@ -54,26 +54,8 @@ namespace ERP_System.Pages.Student
 
 
                    }).ToList();
-            //sub = (from s in _context.subjects
-            //       join a in _context.attences
-            //       on s.sub_id equals a.sub_id into attendanceGroup
-            //       where s.stream_id == store.stream_id  
-            //       select new Subj
-            //       {
-            //           sub_id = s.sub_id,
-            //           stream_id = s.stream_id,
-            //           sem_id = s.sem_id,
-            //           fac_id = s.fac_id,
-            //           college_id = s.college_id,
-            //           sub_name = s.sub_name,
-            //           is_active = s.is_active,
-            //           AttendanceDetails = attendanceGroup.Where(a => a.student_id == id).Select(a => new Attendence
-            //           {
-            //               date = a.date,
-            //               Active = a.Active,
-            //               student_id = a.student_id
-            //           }).ToList()
-            //       }).ToList();
+          
+           
             return Page();
         }
     }
